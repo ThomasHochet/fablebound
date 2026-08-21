@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*@import "./styles/fanta.css";*/
+@import "styles/fantasy.css";
+@import "tailwindcss";
+
+:root {
+    --frame-border-color: #735b41;
+    --frame-bg-tint: rgba(0, 0, 0, 0.15);
+}
+/*html {
+    background-color: rgba(27, 38, 54, 1);
+    text-align: center;
+    margin: 0;
+}*/
+
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+    url("assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+}
+
+@theme {
+  /* This overrides Tailwind's default sans/serif fonts globally */
+  --font-sans: 'Grenze', serif;
+  --font-serif: 'Grenze', serif;
+  --font-grenze: 'Grenze', serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-eczar: "Eczar", serif;
+}
+
+@layer base {
+    ::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        /*width: 100vw !important;*/
+        /*height: 100vh !important;*/
+        overflow: hidden !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+    }
+
+    *, input, button, select, textarea {
+        font-family: var(--font-grenze), serif !important;
+    }
+
+    #app {
+        /*height: 100vh;
+        text-align: center;*/
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        overflow: hidden;
+    }
+}
+
+.bg {
+    background-image: url(assets/images/kenden.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+input {
+    display: block;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    border-bottom: 2px solid #735b41;
+    outline: none;
+    box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.25s ease-out, border-color 0.25s ease-out;
+}
+
+input:hover,
+input:focus {
+    box-shadow: 0px 7px 8px -3px rgba(0, 0, 0, 0.75);
+    border-bottom-color: #aa9b79; /* Subtle gold accent on hover */
+}
+
+button {
+    color: #e6c06f;
+    outline: none;
+}
+
+.icon-button {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
