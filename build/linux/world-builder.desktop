@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=world-builder
+Exec=world-builder
+Icon=world-builder
+Categories=Development;
+Terminal=false
+Keywords=wails
+Version=1.0
+StartupNotify=false

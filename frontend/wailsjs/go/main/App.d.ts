@@ -77,6 +77,8 @@ export function FetchTrait(arg1:string,arg2:number):Promise<services.TraitItem>;
 
 export function Greet(arg1:string):Promise<string>;
 
+export function OpenEditorWindow(arg1:string):Promise<void>;
+
 export function SaveAffiliation(arg1:models.Affiliation):Promise<models.Affiliation>;
 
 export function SaveCharacter(arg1:models.Character):Promise<models.Character>;

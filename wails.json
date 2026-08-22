@@ -1,12 +1,13 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
   "name": "world-builder",
-  "build:args": "-tags webkit2_41",
-  "outputfilename": "world-builder",
-  "frontend:install": "npm install --legacy-peer-deps",
-  "frontend:build": "npm run build",
-  "frontend:dev:watcher": "npm run dev",
-  "frontend:dev:serverUrl": "auto",
+  "frontend": {
+    "dir": "./frontend",
+    "install": "npm install",
+    "build": "npm run build",
+    "dev": "npm run dev",
+    "devServerUrl": "http://localhost:5173"
+  },
   "author": {
     "name": "ThomasHochet",
     "email": "thochet.web@gmail.com"

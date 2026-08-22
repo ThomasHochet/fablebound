@@ -150,6 +150,10 @@ export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
 
+export function OpenEditorWindow(arg1) {
+  return window['go']['main']['App']['OpenEditorWindow'](arg1);
+}
+
 export function SaveAffiliation(arg1) {
   return window['go']['main']['App']['SaveAffiliation'](arg1);
 }

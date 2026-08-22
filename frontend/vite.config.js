@@ -13,10 +13,15 @@ export default defineConfig({
       compiler: 'svelte',
     })
   ],
+  server: {
+    host: '127.0.0.1',
+    port: 9245,
+    strictPort: true
+  },
   resolve: {
     alias: {
-      '$lib': path.resolve(__dirname, './src/lib'),
-      '$wails': path.resolve(__dirname, './wailsjs'),
+      '$lib': path.resolve(import.meta.dirname, './src/lib'),
+      '$wails': path.resolve(import.meta.dirname, './bindings'),
     }
   }
 })

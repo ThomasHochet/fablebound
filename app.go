@@ -6,12 +6,13 @@ import (
 	"world-builder/internal/models"
 	"world-builder/internal/services"
 
+	"github.com/wailsapp/wails/v3/pkg/application"
 	"gorm.io/gorm"
 )
 
 // App struct
 type App struct {
-	ctx                 context.Context
+	wailsApp            *application.App
 	db                  *gorm.DB
 	articleService      *services.ArticleService
 	characterService    *services.CharacterService
@@ -38,15 +39,25 @@ func NewApp(database *gorm.DB) *App {
 	}
 }
 
-// startup is called when the app starts. The context is saved
-// so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
+// ServiceStartup replaces the v2 startup method
+func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+	// Keep a reference to the main application instance
+	a.wailsApp = application.Get()
+	return nil
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+// Open window editor based on the section
+func (a *App) OpenEditorWindow(section string) {
+	if a.wailsApp == nil {
+		a.wailsApp = application.Get()
+	}
+
+	a.wailsApp.Window.NewWithOptions(application.WebviewWindowOptions{
+		Title:  fmt.Sprintf("World Builder - %s Editor", section),
+		Width:  1920,
+		Height: 1080,
+		URL:    fmt.Sprintf("#/editor/%s", section),
+	})
 }
 
 // Articles
