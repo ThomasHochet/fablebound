@@ -13,6 +13,9 @@ export default defineConfig({
       compiler: 'svelte',
     })
   ],
+  optimizeDeps: {
+    exclude: ['@tiptap/pm']
+  },
   server: {
     host: '127.0.0.1',
     port: 9245,

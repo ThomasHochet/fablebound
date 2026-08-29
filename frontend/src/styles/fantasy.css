@@ -15,18 +15,30 @@
       calc(1.5px * var(--scale) / 4.5)
       calc(1.5px * var(--scale) / 4.5)
       #160500;
-
+/*
     --border-bg: linear-gradient(
       to bottom,
       #bdab8c,
       #aa9b79 49%,
       #735b41 51%,
       #766652
+    );*/
+    --border-bg: linear-gradient(
+      to bottom,
+      /*#bdab8c,
+      #aa9b79 49%,
+      #735b41 51%,*/
+      #766652
     );
     --inlay-hover-opacity: 0.75;
     --border-hover-opacity: 0.75;
-    --border-focus-bg: repeating-conic-gradient(
+    /*--border-focus-bg: repeating-conic-gradient(
       #bdab8c 0deg 30deg,
+      #766652 30deg 60deg
+    );*/
+
+    --border-focus-bg: repeating-conic-gradient(
+      /*#bdab8c 0deg 30deg,*/
       #766652 30deg 60deg
     );
 
@@ -387,6 +399,53 @@
       calc(37px * var(--s)) calc(44px * var(--s))
     );
   }
+
+  /* Persistent Socketed / Sunken State when Bold is ON */
+  [class*="fantasy-btn"].is-active {
+    /* 1. Shift the text slightly down into the socket */
+    --_text-state-shadow: 0 1px 0 #000, 0 0 8px rgba(255, 215, 0, 0.5);
+    --_text-state-color: #fff4d0;
+  }
+
+  /* Push the inner inlay (::before) downward into its bezel */
+  [class*="fantasy-btn"].is-active::before {
+    /* Physical inset shift */
+    transform: translateY(calc(2px * var(--s))) scale(0.97);
+    transition: transform 0.1s ease-out;
+
+    /* Inset cavity shadow: heavy dark gradient at the top edge to simulate shadow cast by the bezel */
+    background:
+      linear-gradient(
+        to bottom,
+        #050100 0%,
+        #130602 25%,
+        #291208 60%,
+        #422419 100%
+      ) !important;
+
+    /* Adds ambient depth blur inside the socket */
+    filter: brightness(0.85) contrast(1.1);
+  }
+
+  /* Light up the bottom inner lip of the metallic frame (::after) to catch ambient light */
+  [class*="fantasy-btn"].is-active::after {
+    --_border-state-bg: linear-gradient(
+      to bottom,
+      #504233 0%,
+      #766652 40%,
+      #bdab8c 100%
+    );
+  }
+
+  .fantasy-b-gold {
+      --border-bg: linear-gradient(
+        to bottom,
+        #bdab8c
+        /*#aa9b79 49%,
+        #735b41 51%,*/
+        /*#766652*/
+      ) !important;
+  }
 }
 
 .fantasy-border {
@@ -403,10 +462,10 @@
   /* 3. Define background gradients */
   --border-bg: linear-gradient(
     to bottom,
-    #bdab8c,
-    #aa9b79 49%,
-    #735b41 51%,
-    #766652
+    #bdab8c
+    /*#aa9b79 49%,*/
+    /*#735b41 51%,
+    #766652*/
   );
 
   --inlay-bg: transparent;
@@ -435,6 +494,16 @@
   --_border-state-bg: var(--border-bg);
   --_border-state-opacity: 1;
   --inlay-filter: blur(1px) brightness(1);
+}
+
+.fantasy-border-brown {
+    --border-bg: linear-gradient(
+      to bottom,
+      /*#bdab8c*/
+      /*#aa9b79 49%,*/
+      /*#735b41 51%,*/
+      #766652
+    ) !important;
 }
 
 [class*="fantasy-border"]::before,
@@ -643,7 +712,6 @@
   );
 }
 
-/* Vertical Divider */
 .fantasy-vr {
   position: relative;
   height: 100%;
@@ -679,4 +747,76 @@
     80% calc(50% - 25px * var(--s)),
     80% 15%
   );
+}
+
+.fantasy-input-wrapper {
+  --scale: 0.8;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  padding-inline: calc(40px * var(--s));
+  padding-block: calc(20px * var(--s));
+  margin-bottom: 0.5rem;
+}
+
+.fantasy-input-wrapper input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  width: 100%;
+  height: 100%;
+
+  padding-left: 10px;
+  font-family: serif;
+  color: #160500;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.fantasy-input-wrapper input::placeholder {
+  color: #766652;
+  opacity: 0.8;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.fantasy-input-wrapper:focus-within::after {
+  filter: brightness(1.2);
+  transition: filter 0.2s ease-in-out;
+}
+
+.fantasy-input-inlay {
+  --inlay-bg: #422419;
+    /*radial-gradient(
+      at center 150%,
+      #fffcf2, transparent 35%
+    ) 50% 0% / 150% 25% no-repeat,
+    radial-gradient(
+      at center -25%,
+      #501608, transparent 35%
+    ) 50% 100% / 150% 25% no-repeat,
+    linear-gradient(
+      to bottom,
+      #2c201b,
+      #895648 24%,
+      #422419 26% 49%,
+      #291208 49% 74%,
+      #160500 76%,
+      #1a0801
+    );*/
+
+  --text-color: #e6c06f;
+}
+
+.fantasy-input-inlay input {
+  color: var(--text-color) !important;
+}
+
+.fantasy-input-inlay input::placeholder {
+  color: #aa9b79 !important;
+  opacity: 0.6;
 }

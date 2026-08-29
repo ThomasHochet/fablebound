@@ -5,6 +5,7 @@ import (
 	"world-builder/internal/models"
 
 	"github.com/glebarez/sqlite"
+	"github.com/wailsapp/wails/v3/pkg/application"
 	"gorm.io/gorm"
 )
 
@@ -47,5 +48,50 @@ func InitDB(dbFileName string) (*gorm.DB, error) {
 		return nil, fmt.Errorf("Failed to auto-migrate schema: %w", err)
 	}
 
+	RegisterWailsNotifier(db)
+
 	return db, nil
+}
+
+func RegisterWailsNotifier(db *gorm.DB) {
+	db.Callback().Create().After("gorm:create").Register("wails_notify_create", func(d *gorm.DB) {
+		emitDBEvent(d, "create")
+	})
+
+	db.Callback().Update().After("gorm:update").Register("wails_notify_update", func(d *gorm.DB) {
+		emitDBEvent(d, "update")
+	})
+
+	db.Callback().Delete().After("gorm:delete").Register("wails_notify_delete", func(d *gorm.DB) {
+		emitDBEvent(d, "delete")
+	})
+}
+
+func emitDBEvent(d *gorm.DB, action string) {
+	if d.Error != nil || d.Statement == nil || d.Statement.Table == "" {
+		return
+	}
+
+	var id interface{}
+	if pk := d.Statement.Schema.PrioritizedPrimaryField; pk != nil {
+		id, _ = pk.ValueOf(d.Statement.Context, d.Statement.ReflectValue)
+	}
+
+	// 1. Verify GORM is firing the hook
+	fmt.Printf("--> GORM Hook Fired: Action='%s', Table='%s', ID='%v'\n", action, d.Statement.Table, id)
+
+	app := application.Get()
+	if app == nil {
+		// 2. Catch if the Wails app instance isn't available
+		fmt.Println("--> ERROR: Wails application.Get() returned nil!")
+		return
+	}
+
+	fmt.Println("--> Emitting Wails event 'db:change' to frontend...")
+
+	app.Event.Emit("db:change", map[string]interface{}{
+		"table":  d.Statement.Table,
+		"action": action,
+		"id":     id,
+	})
 }

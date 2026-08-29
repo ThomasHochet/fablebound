@@ -158,12 +158,20 @@ func (a *App) FetchLocation(id int64) (*models.Location, error) {
 	return a.locationService.GetByID(id)
 }
 
-func (a *App) FetchTopLevelLocations() ([]models.Location, error) {
+func (a *App) FetchRoots() ([]models.Location, error) {
 	return a.locationService.GetRoots()
 }
 
 func (a *App) FetchAllLocations() ([]models.Location, error) {
 	return a.locationService.GetAll()
+}
+
+func (a *App) FetchLocationTypes() ([]string, error) {
+	return a.locationService.GetTypes()
+}
+
+func (a *App) FetchLocationSubtypes() ([]string, error) {
+	return a.locationService.GetSubtypes()
 }
 
 func (a *App) DeleteLocation(id int64) error {

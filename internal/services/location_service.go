@@ -73,6 +73,31 @@ func (s *LocationService) GetAll() ([]models.Location, error) {
 	return locations, err
 }
 
+// Get to only get locations types, and subtypes
+func (s *LocationService) GetTypes() ([]string, error) {
+	var types []string
+
+	err := s.db.Table("locations").
+		Select("DISTINCT type").
+		Where("type IS NOT NULL AND type != ''").
+		Order("type ASC").
+		Find(&types).Error
+
+	return types, err
+}
+
+func (s *LocationService) GetSubtypes() ([]string, error) {
+	var subtypes []string
+
+	err := s.db.Table("locations").
+		Select("DISTINCT subtype").
+		Where("subtype IS NOT NULL AND subtype != ''").
+		Order("subtype ASC").
+		Find(&subtypes).Error
+
+	return subtypes, err
+}
+
 // Update saves changes and prevents a location from becoming its own parent
 func (s *LocationService) Update(location models.Location) (*models.Location, error) {
 	if location.ID == 0 {

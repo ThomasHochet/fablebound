@@ -1,36 +1,33 @@
 <script lang='ts'>
-    import { TrixEditor } from 'svelte-trix';
-    import { CreateArticle } from '$wails/world-builder/app.js';
+    import FactionOverview from "../layout/Overviews/FactionOverview.svelte";
+    import LocationOverview from "../layout/Overviews/LocationOverview.svelte";
+    import ArticleForm from "./forms/ArticleForm.svelte";
+    import CharacterForm from "./forms/CharacterForm.svelte";
+    import FactionForm from "./forms/FactionForm.svelte";
+    import LocationForm from "./forms/LocationForm.svelte";
+    import LoreForm from "./forms/LoreForm.svelte";
 
     let { section } = $props();
-
-    // let title = $state(initialTitle)
-    // let description = $state(initialDescription);
-
-    // console.log("EditorWindow")
-
-    // $effect(() => {
-    //   title = initialTitle
-    //   description = initialDescription
-    // })
-
-    const handleChange = (html: string) => {
-      console.log(html)
-    }
-
-    // function handleSave() {
-    //   console.log(title, description)
-    //   CreateArticle(title, description)
-    // }
 </script>
 
-<article class="w-full grid grid-cols-12 justify-center fantasy-border ">
-    <input autocomplete="off" bind:value={section} class="input" id="title" type="text" placeholder="Title">
-    <div class="w-full col-span-12">
-        <TrixEditor
-            value="Time to write your adventures..."
-            onChange={handleChange}
-        />
-    </div>
-    <button class="fantasy-btn-2xl fantasy-bone-n-coper">Save</button>
-</article>
+<section>
+    {#if section === 'character'}
+        <CharacterForm />
+    {:else if section === 'lore'}
+        <LoreForm />
+    {:else if section === 'location'}
+        <LocationOverview />
+    {:else if section.startsWith('location/form')}
+        {@const formId = section.split('location/form/')[1]}
+        <LocationForm id={formId} />
+    {:else if section === 'faction'}
+        <FactionOverview />
+    {:else if section.startsWith('faction/form')}
+        {@const formId = section.split('faction/form/')[1]}
+        <FactionForm id={formId} />
+    {:else if section === 'world'}
+        <ArticleForm />
+    {:else}
+        <ArticleForm />
+    {/if}
+</section>

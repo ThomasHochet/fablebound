@@ -297,6 +297,24 @@ export function FetchLocation(id) {
 }
 
 /**
+ * @returns {$CancellablePromise<string[]>}
+ */
+export function FetchLocationSubtypes() {
+    return $Call.ByID(1632234071).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType27($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<string[]>}
+ */
+export function FetchLocationTypes() {
+    return $Call.ByID(3638821909).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType27($result);
+    }));
+}
+
+/**
  * @param {number} id
  * @param {string} category
  * @returns {$CancellablePromise<services$0.LookupItem | null>}
@@ -313,7 +331,7 @@ export function FetchLookup(id, category) {
  */
 export function FetchLore(id) {
     return $Call.ByID(3522502387, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType28($result);
     }));
 }
 
@@ -333,15 +351,15 @@ export function FetchLoreByCategory(id) {
  */
 export function FetchRelationship(id) {
     return $Call.ByID(2543099177, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType28($result);
+        return $$createType29($result);
     }));
 }
 
 /**
  * @returns {$CancellablePromise<models$0.Location[]>}
  */
-export function FetchTopLevelLocations() {
-    return $Call.ByID(4239849836).then(/** @type {($result: any) => any} */(($result) => {
+export function FetchRoots() {
+    return $Call.ByID(2764455836).then(/** @type {($result: any) => any} */(($result) => {
         return $$createType15($result);
     }));
 }
@@ -424,7 +442,7 @@ export function SaveLookup(id, label, category) {
  */
 export function SaveLore(lore) {
     return $Call.ByID(462985252, lore).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType28($result);
     }));
 }
 
@@ -435,7 +453,7 @@ export function SaveLore(lore) {
  */
 export function SaveLoreCategory(id, label) {
     return $Call.ByID(3842817276, id, label).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType29($result);
+        return $$createType30($result);
     }));
 }
 
@@ -445,7 +463,7 @@ export function SaveLoreCategory(id, label) {
  */
 export function SaveRelationships(relationship) {
     return $Call.ByID(2289153463, relationship).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType28($result);
+        return $$createType29($result);
     }));
 }
 
@@ -501,6 +519,7 @@ const $$createType23 = models$0.Relationship.createFrom;
 const $$createType24 = $Create.Array($$createType23);
 const $$createType25 = $Create.Nullable($$createType12);
 const $$createType26 = $Create.Nullable($$createType14);
-const $$createType27 = $Create.Nullable($$createType17);
-const $$createType28 = $Create.Nullable($$createType23);
-const $$createType29 = $Create.Nullable($$createType20);
+const $$createType27 = $Create.Array($Create.Any);
+const $$createType28 = $Create.Nullable($$createType17);
+const $$createType29 = $Create.Nullable($$createType23);
+const $$createType30 = $Create.Nullable($$createType20);

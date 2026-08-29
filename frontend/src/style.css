@@ -74,7 +74,7 @@
     width: 100vw;
 }
 
-input {
+/*input {
     display: block;
     border: none;
     border-radius: 0;
@@ -88,8 +88,8 @@ input {
 input:hover,
 input:focus {
     box-shadow: 0px 7px 8px -3px rgba(0, 0, 0, 0.75);
-    border-bottom-color: #aa9b79; /* Subtle gold accent on hover */
-}
+    border-bottom-color: #aa9b79;
+}*/
 
 button {
     color: #e6c06f;
