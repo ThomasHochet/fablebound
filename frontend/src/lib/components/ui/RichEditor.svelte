@@ -104,13 +104,13 @@
 </script>
 
 {#if editor && !disabled}
-    <div class="ml-1 mb-1 mt-2 text-left">
+    <div class="ml-1 mb-1 text-left tool-bar">
         <button
             type="button"
             title="Bold (Ctrl+B)"
             onclick={() => editor?.chain().focus().toggleBold().run()}
             disabled={!editor?.can().chain().focus().toggleBold().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive('bold')}
         >
             <span class="font-bold inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('bold') ? 'translate-y-[1px]' : ''}">
@@ -122,7 +122,7 @@
             title="Ctrl + I"
             onclick={() => editor?.chain().focus().toggleItalic().run()}
             disabled={!editor?.can().chain().focus().toggleItalic().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive('italic')}
         >
             <span class="italic inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('italic') ? 'translate-y-[1px]' : ''}">
@@ -134,7 +134,7 @@
             title="Ctrl + U"
             onclick={() => editor?.chain().focus().toggleUnderline().run()}
             disabled={!editor?.can().chain().focus().toggleUnderline().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive('underline')}
         >
             <span class="underline inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('underline') ? 'translate-y-[1px]' : ''}">
@@ -146,19 +146,20 @@
             title="Ctrl + Shift + S"
             onclick={() => editor?.chain().focus().toggleStrike().run()}
             disabled={!editor?.can().chain().focus().toggleStrike().run()}
-            class="fantasy-btn-sm fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive('strike')}
         >
             <span class="line-through inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('strike') ? 'translate-y-[1px]' : ''}">
                 abc
             </span>
         </button>
+        <div class="tool-divider"></div>
         <button
             type="button"
             title="Align Left - Ctrl + Shift + L"
             onclick={() => editor?.chain().focus().setTextAlign('left').run()}
             disabled={!editor?.can().chain().focus().setTextAlign('left').run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive({ textAlign: 'left'})}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive({ textAlign: 'left' }) ? 'translate-y-[1px]' : ''}">
@@ -170,7 +171,7 @@
             title="Align Center - Ctrl + Shift + E"
             onclick={() => editor?.chain().focus().setTextAlign('center').run()}
             disabled={!editor?.can().chain().focus().setTextAlign('center').run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive({ textAlign: 'center'})}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive({ textAlign: 'center'}) ? 'translate-y-[1px]' : ''}">
@@ -182,7 +183,7 @@
             title="Align Right - Ctrl + Shift + R"
             onclick={() => editor?.chain().focus().setTextAlign('right').run()}
             disabled={!editor?.can().chain().focus().setTextAlign('right').run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive({ textAlign: 'right'})}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive({ textAlign: 'right'}) ? 'translate-y-[1px]' : ''}">
@@ -194,19 +195,20 @@
             title="Justify - Ctrl + Shift + J"
             onclick={() => editor?.chain().focus().setTextAlign('justify').run()}
             disabled={!editor?.can().chain().focus().setTextAlign('justify').run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper"
+            class="tool-btn text-sm"
             class:is-active={updatedTick >= 0 && editor.isActive({ textAlign: 'justify'})}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive({ textAlign: 'justify'}) ? 'translate-y-[1px]' : ''}">
                 <TextJustifyIcon height="1em" />
             </span>
         </button>
+        <div class="tool-divider"></div>
         <button
             type="button"
             title="Heading 1 - Ctrl + Alt + 1"
             onclick={() => editor?.chain().focus().toggleHeading({ level: 1}).run()}
             disabled={!editor?.can().chain().focus().toggleHeading({ level: 1}).run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive( 'heading', {level: 1})}
         >
             <span class="inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('heading', {level: 1}) ? 'translate-y-[1px]' : ''}">
@@ -218,7 +220,7 @@
             title="Heading 2 - Ctrl + Alt + 2"
             onclick={() => editor?.chain().focus().toggleHeading({ level: 2}).run()}
             disabled={!editor?.can().chain().focus().toggleHeading({ level: 2}).run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive( 'heading', {level: 2})}
         >
             <span class="inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('heading', {level: 2}) ? 'translate-y-[1px]' : ''}">
@@ -230,19 +232,20 @@
             title="Heading 3 - Ctrl + Alt + 3"
             onclick={() => editor?.chain().focus().toggleHeading({ level: 3}).run()}
             disabled={!editor?.can().chain().focus().toggleHeading({ level: 3}).run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive( 'heading', {level: 3})}
         >
             <span class="inline-block transition-transform duration-100 {updatedTick >= 0 && editor.isActive('heading', {level: 3}) ? 'translate-y-[1px]' : ''}">
                 h3
             </span>
         </button>
+        <div class="tool-divider"></div>
         <button
             type="button"
             title="Bullet list"
             onclick={() => editor?.chain().focus().toggleBulletList().run()}
             disabled={!editor?.can().chain().focus().toggleBulletList().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive('bulletList')}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive('bulletList') ? 'translate-y-[1px]' : ''}">
@@ -254,7 +257,7 @@
             title="Ordered list"
             onclick={() => editor?.chain().focus().toggleOrderedList().run()}
             disabled={!editor?.can().chain().focus().toggleOrderedList().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive('orderedList')}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive('orderedList') ? 'translate-y-[1px]' : ''}">
@@ -266,7 +269,7 @@
             title="Blockquote"
             onclick={() => editor?.chain().focus().setBlockquote().run()}
             disabled={!editor?.can().chain().focus().setBlockquote().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive('blockquote')}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive('blockquote') ? 'translate-y-[1px]' : ''}">
@@ -278,7 +281,7 @@
             title="Details"
             onclick={() => editor?.chain().focus().setDetails().run()}
             disabled={!editor?.can().chain().focus().setDetails().run()}
-            class="fantasy-btn-xs fantasy-bone-n-coper px-1"
+            class="tool-btn text-sm px-1"
             class:is-active={updatedTick >= 0 && editor.isActive('details')}
         >
             <span class="inline-block transition-transform duration-100 translate-y-0.75 {updatedTick >= 0 && editor.isActive('details') ? 'translate-y-[1px]' : ''}">
@@ -289,14 +292,18 @@
 {/if}
 
 {#snippet editorBody()}
-    <div bind:this={element} class="h-full overflow-y-auto prose prose-invert"></div>
+    <div bind:this={element} class="h-full overflow-y-auto prose prose-invert text-xl pt-2"></div>
 {/snippet}
 
 <div
+    class={`fantasy-border px-5 parchment-base ${!disabled ? 'min-h-96 max-h-96 flex flex-col overflow-hidden cursor-text text-left' : (classes ?? '')}`}
+    onclick={() => !disabled && editor?.chain().focus().run()}
+>
+<!-- <div
     class={`fantasy-border px-5 ${!disabled ? 'min-h-96 max-h-963 flex flex-col overflow-hidden cursor-text text-left' : (classes ?? '')}`}
     style="--inlay-bg: url('{coverImage}') center/cover; --inlay-filter: blur(1px) brightness(1);"
     onclick={() => !disabled && editor?.chain().focus().run()}
->
+> -->
     {#if children}
         {@render children(editorBody)}
     {:else}

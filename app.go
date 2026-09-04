@@ -74,6 +74,10 @@ func (a *App) FetchArticle(id int64) (*models.Article, error) {
 	return a.articleService.GetArticle(id)
 }
 
+func (a *App) FetchArticleCategories() ([]string, error) {
+	return a.articleService.GetCategories()
+}
+
 func (a *App) UpdateArticle(id int64, title, description string) (*models.Article, error) {
 	return a.articleService.Update(id, title, description)
 }

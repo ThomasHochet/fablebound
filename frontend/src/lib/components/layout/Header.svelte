@@ -4,6 +4,7 @@
     import Bookmarklet from '@iconify-svelte/game-icons/components/b/bookmarklet.svelte'
     import Castle from '@iconify-svelte/game-icons/components/e/elven-castle.svelte'
     import Banner from '@iconify-svelte/game-icons/components/v/vertical-banner.svelte'
+    import Gears from '@iconify-svelte/game-icons/components/g/gears.svelte'
 
     let { onSelect } = $props();
 
@@ -52,6 +53,11 @@
                 <div class="flex items-center justify-center gap-0 5">
                     <Banner height="1.25em" />
                     <span class="pl-1">Faction</span>
+                </div>
+            </button>
+            <button onclick={() => onSelect('params')} class="tool-btn">
+                <div class="flex items-center justify-center gap-0 5">
+                    <Gears height="1.25em" />
                 </div>
             </button>
         </div>

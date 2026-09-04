@@ -3,8 +3,6 @@
     "moduleResolution": "Node",
     "target": "ESNext",
     "module": "ESNext",
-
-  "baseUrl": ".",
     "paths": {
       "$lib/*": ["src/lib/*"],
       "$wails/*": ["bindings/*"]
@@ -39,5 +37,5 @@
     "src/**/*.d.ts",
     "src/**/*.js",
     "src/**/*.svelte"
-  ]
+, "src/lib/functions/subscribe.ts"  ]
 }

@@ -124,13 +124,7 @@
     --_outline-state-offset: var(--_outline-base-offset);
 
     --_outline-base-style: var(--outline-style, none);
-    --_outline-hover-style: var(--outline-hover-style, var(--_outline-base-style));.parchment-bg {
-        background-image: url(assets/images/parchments/grunge-certificate-with-vintage-ornamental-frame.jpg), url(assets/images/parchments/wooden-floor-background.jpg);
-        background-position: center, top left;
-        background-repeat: no-repeat, repeat;
-        background-size: contain, auto;
-        height: 100vh;
-    }
+    --_outline-hover-style: var(--outline-hover-style, var(--_outline-base-style));
 
     --_outline-focus-style: var(--outline-focus-style, solid);
     --_outline-active-style: var(--outline-active-style, var(--_outline-focus-style));
@@ -448,12 +442,20 @@
   }
 }
 
+.parchment-bg {
+    background-image: url(assets/images/parchments/grunge-certificate-with-vintage-ornamental-frame.jpg), url(assets/images/parchments/wooden-floor-background.jpg);
+    background-position: center, top left;
+    background-repeat: no-repeat, repeat;
+    background-size: contain, auto;
+    height: 100vh;
+}
+
 .fantasy-border {
   /* 1. Required for absolute pseudo-elements & z-index layering */
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  background: transparent;
+  /*background: transparent;*/
 
   /* 2. Fix scale calculation syntax */
   --scale: 1;
@@ -496,6 +498,14 @@
   --inlay-filter: blur(1px) brightness(1);
 }
 
+.parchment-base {
+    position: relative;
+    --inlay-bg: linear-gradient(120deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%) !important;
+    /*background: linear-gradient(120deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);*/
+    border-radius: 2px;
+}
+
+
 .fantasy-border-brown {
     --border-bg: linear-gradient(
       to bottom,
@@ -521,6 +531,10 @@
   opacity: var(--_inlay-state-opacity);
 
   filter: var(--inlay-filter, none);
+
+  /*transform: scale(1.005);
+    transform-origin: center;*/
+
 
   clip-path: polygon(
     calc(50px * var(--s)) calc(82px * var(--s)),
@@ -672,84 +686,7 @@
   );
 }
 
-/* Horizontal Divider */
-.fantasy-hr {
-  position: relative;
-  width: 100%;
-  --scale: 1;
-  --s: calc(var(--scale) / 4.5);
-  height: calc(18px * var(--s));
-  margin-block: 1.5rem;
-
-  /* Metallic gradient matching your theme */
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    #766652 15%,
-    #bdab8c 45%,
-    #fffcf2 50%,
-    #bdab8c 55%,
-    #766652 85%,
-    transparent 100%
-  );
-
-  /* Ornate tapered shape with a diamond accent in the center */
-  clip-path: polygon(
-    0% 50%,
-    15% 20%,
-    calc(50% - 25px * var(--s)) 20%,
-    calc(50% - 12px * var(--s)) 0%,
-    50% 100%,
-    calc(50% + 12px * var(--s)) 0%,
-    calc(50% + 25px * var(--s)) 20%,
-    85% 20%,
-    100% 50%,
-    85% 80%,
-    calc(50% + 25px * var(--s)) 80%,
-    50% 100%,
-    calc(50% - 25px * var(--s)) 80%,
-    15% 80%
-  );
-}
-
-.fantasy-vr {
-  position: relative;
-  height: 100%;
-  --scale: 1;
-  --s: calc(var(--scale) / 4.5);
-  width: calc(18px * var(--s));
-  margin-inline: 1rem;
-
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #766652 15%,
-    #bdab8c 45%,
-    #fffcf2 50%,
-    #bdab8c 55%,
-    #766652 85%,
-    transparent 100%
-  );
-
-  clip-path: polygon(
-    50% 0%,
-    20% 15%,
-    20% calc(50% - 25px * var(--s)),
-    0% calc(50% - 12px * var(--s)),
-    100% 50%,
-    0% calc(50% + 12px * var(--s)),
-    20% calc(50% + 25px * var(--s)),
-    20% 85%,
-    50% 100%,
-    80% 85%,
-    80% calc(50% + 25px * var(--s)),
-    100% 50%,
-    80% calc(50% - 25px * var(--s)),
-    80% 15%
-  );
-}
-
-.fantasy-input-wrapper {
+/*.fantasy-input-wrapper {
   --scale: 0.8;
 
   display: flex;
@@ -790,7 +727,7 @@
 }
 
 .fantasy-input-inlay {
-  --inlay-bg: #422419;
+  --inlay-bg: #422419;*/
     /*radial-gradient(
       at center 150%,
       #fffcf2, transparent 35%
@@ -809,7 +746,7 @@
       #1a0801
     );*/
 
-  --text-color: #e6c06f;
+  /*--text-color: #e6c06f;
 }
 
 .fantasy-input-inlay input {
@@ -819,4 +756,4 @@
 .fantasy-input-inlay input::placeholder {
   color: #aa9b79 !important;
   opacity: 0.6;
-}
+}*/

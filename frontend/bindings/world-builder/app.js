@@ -229,11 +229,20 @@ export function FetchArticle(id) {
 }
 
 /**
+ * @returns {$CancellablePromise<string[]>}
+ */
+export function FetchArticleCategories() {
+    return $Call.ByID(1862299367).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType20($result);
+    }));
+}
+
+/**
  * @returns {$CancellablePromise<models$0.LoreCategory[]>}
  */
 export function FetchCategories() {
     return $Call.ByID(1147202407).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType21($result);
+        return $$createType22($result);
     }));
 }
 
@@ -243,7 +252,7 @@ export function FetchCategories() {
  */
 export function FetchCharacter(id) {
     return $Call.ByID(2195128362, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType22($result);
+        return $$createType23($result);
     }));
 }
 
@@ -263,7 +272,7 @@ export function FetchCharacterLore(id) {
  */
 export function FetchCharacterRelationships(id) {
     return $Call.ByID(2047072793, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType24($result);
+        return $$createType25($result);
     }));
 }
 
@@ -273,7 +282,7 @@ export function FetchCharacterRelationships(id) {
  */
 export function FetchFaction(id) {
     return $Call.ByID(26663597, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType25($result);
+        return $$createType26($result);
     }));
 }
 
@@ -292,7 +301,7 @@ export function FetchGeneralLore() {
  */
 export function FetchLocation(id) {
     return $Call.ByID(3420735404, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType26($result);
+        return $$createType27($result);
     }));
 }
 
@@ -301,7 +310,7 @@ export function FetchLocation(id) {
  */
 export function FetchLocationSubtypes() {
     return $Call.ByID(1632234071).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType20($result);
     }));
 }
 
@@ -310,7 +319,7 @@ export function FetchLocationSubtypes() {
  */
 export function FetchLocationTypes() {
     return $Call.ByID(3638821909).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType20($result);
     }));
 }
 
@@ -400,7 +409,7 @@ export function SaveAffiliation(affiliation) {
  */
 export function SaveCharacter(char) {
     return $Call.ByID(1988835663, char).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType22($result);
+        return $$createType23($result);
     }));
 }
 
@@ -410,7 +419,7 @@ export function SaveCharacter(char) {
  */
 export function SaveFaction(faction) {
     return $Call.ByID(801287184, faction).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType25($result);
+        return $$createType26($result);
     }));
 }
 
@@ -420,7 +429,7 @@ export function SaveFaction(faction) {
  */
 export function SaveLocation(location) {
     return $Call.ByID(1455493271, location).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType26($result);
+        return $$createType27($result);
     }));
 }
 
@@ -512,14 +521,14 @@ const $$createType16 = $Create.Array($$createType2);
 const $$createType17 = models$0.Lore.createFrom;
 const $$createType18 = $Create.Array($$createType17);
 const $$createType19 = $Create.Array($$createType4);
-const $$createType20 = models$0.LoreCategory.createFrom;
-const $$createType21 = $Create.Array($$createType20);
-const $$createType22 = $Create.Nullable($$createType10);
-const $$createType23 = models$0.Relationship.createFrom;
-const $$createType24 = $Create.Array($$createType23);
-const $$createType25 = $Create.Nullable($$createType12);
-const $$createType26 = $Create.Nullable($$createType14);
-const $$createType27 = $Create.Array($Create.Any);
+const $$createType20 = $Create.Array($Create.Any);
+const $$createType21 = models$0.LoreCategory.createFrom;
+const $$createType22 = $Create.Array($$createType21);
+const $$createType23 = $Create.Nullable($$createType10);
+const $$createType24 = models$0.Relationship.createFrom;
+const $$createType25 = $Create.Array($$createType24);
+const $$createType26 = $Create.Nullable($$createType12);
+const $$createType27 = $Create.Nullable($$createType14);
 const $$createType28 = $Create.Nullable($$createType17);
-const $$createType29 = $Create.Nullable($$createType23);
-const $$createType30 = $Create.Nullable($$createType20);
+const $$createType29 = $Create.Nullable($$createType24);
+const $$createType30 = $Create.Nullable($$createType21);

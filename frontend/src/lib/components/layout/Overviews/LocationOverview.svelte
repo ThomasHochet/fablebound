@@ -5,6 +5,7 @@
     import { Location } from "$wails/world-builder/internal/models/models";
     import RichEditor from "$lib/components/ui/RichEditor.svelte";
     import { Events } from "@wailsio/runtime";
+    import { subscribe } from "$lib/functions/subscribe";
 
     let isLoading = $state(true)
     let locations = $state<Location[]>()
@@ -44,19 +45,7 @@
     onMount(() => {
       fetchData()
 
-      const unsubscribe = Events.On("db:change", event => {
-        const payload = event.data
-        console.log("🔥 RAW EVENT RECEIVED:", event); // Let's see exactly what Wails gives us
-
-        if (payload && payload.table === 'locations') {
-          console.log(`location table changed (${payload.action}), refreshing`)
-          fetchData()
-        }
-      })
-
-      return () => {
-        unsubscribe()
-      }
+      return subscribe('locations', fetchData)
     })
 </script>
 
@@ -72,7 +61,7 @@
                         <p class="col-span-3 text-gray-500">{location.type}</p>
                     {/if}
                     <hr class="col-span-6">
-                    <div class="col-span-6 text-left h-full self-start overflow-y-auto">
+                    <div class="col-span-6 flex min-w-0 text-left h-full self-start truncate! overflow-hidden!">
                         {@render prose()}
                     </div>
                     <div class="col-span-6 justify-items-center mb-1">

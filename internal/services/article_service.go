@@ -57,6 +57,19 @@ func (s *ArticleService) GetAll() ([]models.Article, error) {
 	return articles, nil
 }
 
+// Get all already stored categories
+func (s *ArticleService) GetCategories() ([]string, error) {
+	var categories []string
+
+	err := s.db.Table("articles").
+		Select("DISTINCT category").
+		Where("category IS NOT NULL AND category != ''").
+		Order("category ASC").
+		Find(&categories).Error
+
+	return categories, err
+}
+
 func (s *ArticleService) Update(id int64, title, description string) (*models.Article, error) {
 	article, err := s.GetArticle(id)
 	if err != nil {

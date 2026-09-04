@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"reflect"
 	"world-builder/internal/models"
 
 	"gorm.io/gorm"
@@ -43,17 +44,21 @@ func (s *LookupService) Create(category, label string) (*LookupItem, error) {
 		return nil, err
 	}
 
-	data := map[string]interface{}{"label": label}
-	if err = s.db.Model(model).Create(&data).Error; err != nil {
+	val := reflect.ValueOf(model).Elem()
+	val.FieldByName("Label").SetString(label)
+
+	if err = s.db.Create(model).Error; err != nil {
 		return nil, err
 	}
 
-	return s.Fetch(data["id"].(int64), category)
+	id := val.FieldByName("ID").Int()
 
-	// return &LookupItem{
-	// 	ID:    data["id"].(int64),
-	// 	Label: label,
-	// }, nil
+	// return s.Fetch(data["id"].(int64), category)
+
+	return &LookupItem{
+		ID:    id,
+		Label: label,
+	}, nil
 }
 
 func (s *LookupService) Fetch(id int64, category string) (*LookupItem, error) {

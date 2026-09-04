@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"reflect"
 	"world-builder/internal/models"
 
 	"gorm.io/gorm"
@@ -43,17 +44,19 @@ func (s *TraitService) Create(category, label string) (*TraitItem, error) {
 		return nil, err
 	}
 
-	data := map[string]interface{}{"label": label}
-	if err := s.db.Model(model).Create(&data).Error; err != nil {
+	val := reflect.ValueOf(model).Elem()
+	val.FieldByName("Label").SetString(label)
+
+	if err = s.db.Create(model).Error; err != nil {
 		return nil, err
 	}
 
-	return s.Fetch(category, data["id"].(int64))
+	id := val.FieldByName("ID").Int()
 
-	// return &TraitItem{
-	// 	ID:    data["id"].(int64),
-	// 	Label: label,
-	// }, err
+	return &TraitItem{
+		ID:    id,
+		Label: label,
+	}, err
 }
 
 func (s *TraitService) Fetch(category string, id int64) (*TraitItem, error) {

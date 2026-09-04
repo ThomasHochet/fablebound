@@ -2,6 +2,7 @@
     import CharacterForm from '$lib/components/features/forms/CharacterForm.svelte';
     import BottomButton from '$lib/components/ui/BottomButton.svelte';
     import RichEditor from '$lib/components/ui/RichEditor.svelte';
+    import { subscribe } from '$lib/functions/subscribe';
     import { DeleteAffiliation, FetchAllAffiliations, FetchAllFactions, OpenEditorWindow } from '$wails/world-builder/app';
     import { Faction, Affiliation } from '$wails/world-builder/internal/models/models'
     import { onMount } from 'svelte';
@@ -46,9 +47,11 @@
       fetchData()
     }
 
-    onMount(() =>
+    onMount(() => {
       fetchData()
-    )
+
+      return subscribe('affiliations', fetchData)
+    })
 </script>
 
 <section id="overview-factions" class="w-full grid grid-cols-12 p-1 gap-1">

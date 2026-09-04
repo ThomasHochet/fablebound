@@ -6,7 +6,12 @@
     import RichEditor from "$lib/components/ui/RichEditor.svelte";
 
     let { id } = $props();
-    let affiliation = $state<Affiliation | null>()
+    let affiliation = $state({
+      name: '',
+      description: 'Describe your affiliation...',
+      type: '',
+      factionName: ''
+    })
 
     // on mount value
     let factions = $state<Faction[]>([])
@@ -17,25 +22,21 @@
     let isLoading = $state(true)
 
     // misc
-    let affiliationName = $state('')
-    let affiliationDescription = $state('Describe your affiliation...')
-    let affiliationType = $state('')
-    let selectedFactionName = $state('')
     let selectedFactionId = $derived(
-      factions.find((faction) => faction.name === selectedFactionName)?.id ?? null
+      factions.find((faction) => faction.name === affiliation.factionName)?.id ?? null
     )
-    let selectedFaction = $state<Faction | null>()
+    let selectedFaction = $state<Faction | null>(null)
 
     async function handleSubmit(e: SubmitEvent) {
         e.preventDefault();
         try {
           const payload = new Affiliation({
-            name: affiliationName,
-            description: affiliationDescription,
-            type: affiliationType,
+            id: id ? Number(id) : undefined,
+            name: affiliation.name,
+            description: affiliation.description,
+            type: affiliation.type,
             faction_id: selectedFactionId
           })
-          // console.log(payload)
           const createdAffiliation = await SaveAffiliation(payload)
         } catch(err) {
           console.error(err)
@@ -54,18 +55,17 @@
 
     async function loadAffiliation(id: number) {
       try {
-        affiliation = await FetchAffiliation(id)
+        const affiliationData = await FetchAffiliation(id)
+
+        affiliation.name = affiliationData?.name ?? ''
+        affiliation.description = affiliationData?.description ?? ''
+        affiliation.type = affiliationData?.type ?? ''
+        affiliation.factionName = affiliationData?.faction?.name ?? ''
       } catch(err) {
         console.error("Failed to load Faction.", err)
       } finally {
         isLoading = false;
       }
-
-      affiliationName = affiliation?.name
-      affiliationDescription = affiliation?.description
-      affiliationType = affiliation?.type
-      selectedFactionId = affiliation?.faction?.id
-      selectedFactionName = affiliation?.faction?.name
     }
 
     async function handleFactionSave(data: { title: string; description: string }) {
@@ -79,7 +79,7 @@
           await loadFactions()
 
           if (createdFaction?.name) {
-            selectedFactionName = createdFaction.name
+            affiliation.factionName = createdFaction.name
           }
         } catch(err) {
           console.error(err)
@@ -103,7 +103,7 @@
         DeleteFaction(selectedFactionId)
       }
       loadFactions()
-      selectedFactionName = ''
+      affiliation.factionName = ''
     }
 
     onMount(() => {
@@ -125,9 +125,9 @@
 
     <form onsubmit={handleSubmit}>
         <input type="hidden" name="faction-id" value={selectedFactionId} />
-        <input type="text" name="title" placeholder="Affiliation" bind:value={affiliationName} />
+        <input type="text" name="title" placeholder="Affiliation" bind:value={affiliation.name} />
         <div class="flex">
-            <input type="text" name="factions-choice" id="factions-choice" list="factions" placeholder="Faction ?" bind:value={selectedFactionName}>
+            <input type="text" name="factions-choice" id="factions-choice" list="factions" placeholder="Faction ?" bind:value={affiliation.factionName}>
             <datalist id="factions">
                 {#each factions as faction}
                     <option value={faction.name}></option>
@@ -140,8 +140,8 @@
                 Delete
             </button>
         </div>
-        <input type="text" name="type" id="affiliation-type" placeholder="Type" bind:value={affiliationType} />
-        <RichEditor bind:value={affiliationDescription} />
+        <input type="text" name="type" id="affiliation-type" placeholder="Type" bind:value={affiliation.type} />
+        <RichEditor bind:value={affiliation.description} />
         <div class="flex">
             <button type="submit" class="fantasy-btn fantasy-bone-n-coper">
                 Save
