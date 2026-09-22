@@ -1,7 +1,5 @@
 <script lang='ts'>
-    import FactionOverview from "../layout/Overviews/FactionOverview.svelte";
-    import LocationOverview from "../layout/Overviews/LocationOverview.svelte";
-    import LoreOverview from "../layout/Overviews/LoreOverview.svelte";
+
     import ArticleForm from "./forms/ArticleForm.svelte";
     import CharacterForm from "./forms/CharacterForm.svelte";
     import FactionForm from "./forms/FactionForm.svelte";
@@ -13,28 +11,22 @@
 </script>
 
 <section>
-    {#if section === 'character'}
-        <CharacterForm />
-    {:else if section === 'lore'}
-        <LoreOverview />
+    {#if section.startsWith('character/form')}
+        {@const formId = section.split('character/form/')[1]}
+        <CharacterForm id={formId} />
     {:else if section.startsWith('lore/form')}
         {@const formId = section.split('lore/form/')[1]}
         <LoreForm id={formId} />
-    {:else if section === 'location'}
-        <LocationOverview />
     {:else if section.startsWith('location/form')}
         {@const formId = section.split('location/form/')[1]}
         <LocationForm id={formId} />
-    {:else if section === 'faction'}
-        <FactionOverview />
     {:else if section.startsWith('faction/form')}
         {@const formId = section.split('faction/form/')[1]}
         <FactionForm id={formId} />
-    {:else if section === 'world'}
-        <ArticleForm />
+    {:else if section.startsWith('world/form')}
+        {@const formId = section.split('world/form/')[1]}
+        <ArticleForm id={formId} />
     {:else if section === 'params'}
         <ParametersForm />
-    {:else}
-        <ArticleForm />
     {/if}
 </section>

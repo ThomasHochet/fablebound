@@ -1,4 +1,6 @@
 <script lang="ts">
+    import FeatherQuill from "@iconify-svelte/game-icons/components/q/quill-ink.svelte"
+
     let {
       isReady = false,
       missingType = null
@@ -56,6 +58,6 @@
     })
 </script>
 
-<span class="ml-2 text-sm text-[#a38c71] italic font-cinzel">
-    Status: {currentMessage}
+<span class="ml-2 text-sm text-[#a38c71] italic font-cinzel flex">
+    <FeatherQuill height="1rem" /> Status: {currentMessage}
 </span>

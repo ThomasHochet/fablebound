@@ -1,0 +1,3 @@
+For linux, in dev mode, use :
+WEBKIT_DISABLE_DMABUF_RENDERER=1 GDK_BACKEND=wayland wails3 dev
+It should help a bit with input lags.

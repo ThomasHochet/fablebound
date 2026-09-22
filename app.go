@@ -62,8 +62,11 @@ func (a *App) OpenEditorWindow(section string) {
 
 // Articles
 
-func (a *App) CreateArticle(title string, description string) (*models.Article, error) {
-	return a.articleService.Create(title, description, "General")
+func (a *App) SaveArticle(art models.Article) (*models.Article, error) {
+	if art.ID == 0 {
+		return a.articleService.Create(art)
+	}
+	return a.articleService.Update(art)
 }
 
 func (a *App) FetchAllArticles() ([]models.Article, error) {
@@ -78,8 +81,8 @@ func (a *App) FetchArticleCategories() ([]string, error) {
 	return a.articleService.GetCategories()
 }
 
-func (a *App) UpdateArticle(id int64, title, description string) (*models.Article, error) {
-	return a.articleService.Update(id, title, description)
+func (a *App) UpdateArticle(art models.Article) (*models.Article, error) {
+	return a.articleService.Update(art)
 }
 
 func (a *App) DeleteArticle(id int64) error {
@@ -124,6 +127,10 @@ func (a *App) FetchAllFactions() ([]models.Faction, error) {
 	return a.factionService.GetAllFactions()
 }
 
+func (a *App) FetchAllFactionsWithAffiliations() ([]models.Faction, error) {
+	return a.factionService.GetFactionsWithAffiliations()
+}
+
 func (a *App) DeleteFaction(id int64) error {
 	return a.factionService.DeleteFaction(id)
 }
@@ -139,6 +146,10 @@ func (a *App) SaveAffiliation(affiliation models.Affiliation) (*models.Affiliati
 
 func (a *App) FetchAffiliation(id int64) (*models.Affiliation, error) {
 	return a.factionService.GetAffiliation(id)
+}
+
+func (a *App) FetchFactionAffiliations(id int64) ([]models.Affiliation, error) {
+	return a.factionService.GetFactionAffiliations(id)
 }
 
 func (a *App) FetchAllAffiliations() ([]models.Affiliation, error) {

@@ -1,11 +1,15 @@
 <script lang="ts">
     import DataSelector from "$lib/components/ui/DataSelector.svelte";
+    import ParchmentTitle from "$lib/components/ui/ParchmentTitle.svelte";
     import RichEditor from "$lib/components/ui/RichEditor.svelte";
     import StatusQuip from "$lib/components/ui/StatusQuip.svelte";
     import { subscribe } from "$lib/functions/subscribe";
     import { FetchCategories, FetchLore, SaveLore, SaveLoreCategory } from "$wails/world-builder/app";
     import { Lore, LoreCategory } from "$wails/world-builder/internal/models/models";
+    import corners from "$lib/../assets/images/corners.png"
+
     import { onMount } from "svelte";
+    import AnvilImpact from "@iconify-svelte/game-icons/components/a/anvil-impact.svelte";
 
 
     let { id } = $props()
@@ -14,7 +18,7 @@
       title: '',
       content: 'The start of a new story!',
       categoryName: '',
-      categoryId: 0
+      categoryId: null as unknown | number
     })
     let loreCategories = $state<LoreCategory[]>([])
 
@@ -88,43 +92,44 @@
 </script>
 
 
-<section class="grid grid-cols-1 items-center justify-center p-4">
+<section class="h-full grid grid-cols-1 items-center justify-center px-2 ">
+    <div class="relative z-20 -mb-10 pointer-events-none">
+        <ParchmentTitle title="Lore" subtitle="A mundane record still holds experiences worth sharing." />
+    </div>
     <form onsubmit={handleSubmit}>
-        <div class="w-full rounded-lg overflow-hidden shadow-2xl border-4 border-[#2b190c]">
-            <div class="p-5 rounded-t-md relative">
-                <div class="wood-texture-bg"></div>
+        <div class="relative w-full h-full shadow-2xl rounded-sm border-4 border-[#1a0f0f] bg-[#2b190c] p-1 md:p-1 grid grid-cols-1 grid-rows-1">
+            <div class="wood-texture-bg"></div>
 
-                <div class="iron-nail nail-tl"></div>
-                <div class="iron-nail nail-tr"></div>
-                <div class="iron-nail nail-bl"></div>
-                <div class="iron-nail nail-br"></div>
+            <img src="{corners}" alt="" class="absolute -top-4 -left-4 w-15 h-15 pointer-events-none z-10">
+            <img src="{corners}" alt="" class="absolute -top-4 -right-4 w-15 h-15 pointer-events-none z-10 scale-x-[-1]" />
+            <img src="{corners}" alt="" class="absolute -bottom-4 -left-4 w-15 h-15 pointer-events-none z-10 scale-y-[-1]" />
+            <img src="{corners}" alt="" class="absolute -bottom-4 -right-4 w-15 h-15 pointer-events-none z-10 rotate-180" />
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
-                    <div>
-                        <label for="title" class="block text-sm text-left ml-2 text-(--gold-text) mb-1 tracking-wider uppercase">
+            <div class="parchment-background relative w-full h-full grid grid-rows-[auto_1fr] z-10 border border-[#3b2a1e] p-4">
+                <div class="absolute inset-2 border border-[#8b7355]/40 pointer-events-none z-0"></div>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10 px-2 py-1 mb-4">
+                    <div class="grid grid-rows-[auto-auto]">
+                        <label for="title" class="forge-input-label">
                             Chronicle Title*
                         </label>
-                        <div class="fantasy-input-wrapper flex items-center">
-                            <input type="text" name="title" class="fantasy-input" required bind:value={lore.title} placeholder="A brief day for mister Catmancer."  />
-                        </div>
+                        <input type="text" name="title" class="forge-input" required bind:value={lore.title} placeholder="A brief day for mister Catmancer."  />
                     </div>
                     <div class="relative">
-                        <DataSelector items={loreCategories} bind:value={lore.categoryId} onCreate={handleCategoryCreate} placeholder="Select or forge a new category..." labelText="Category*" required={true} />
+                        <DataSelector items={loreCategories} bind:value={lore.categoryId} onCreate={handleCategoryCreate} placeholder="Select or forge a new category..." labelText="Category*" required={true} variant="forge" />
                     </div>
                 </div>
-            </div>
-            <div class="bg-(--wood-dark) p-2">
                 <RichEditor bind:value={lore.content} />
+                <div class="border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
                 <div class="mt-2 flex items-center justify-between">
                     <StatusQuip isReady={isFormReady} missingType={missingFieldType} />
-                    <!-- <span class="ml-2 text-sm text-[#a38c71] italic font-cinzel">Status: Ready to be inscribed</span> -->
-                    <button type="submit" class="fantasy-btn-xl fantasy-bone-n-coper ">
-                        Inscribe
+                    <button type="submit" class="forge-btn forge-btn-base flex align-middle gap-2">
+                        <span class="mb-1"><AnvilImpact height="1.6rem" /></span>
+                        <span>Inscribe</span>
                     </button>
                 </div>
             </div>
-
-
         </div>
     </form>
 </section>

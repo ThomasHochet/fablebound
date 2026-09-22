@@ -5,6 +5,10 @@
     import { onMount } from "svelte";
     import DataSelector from "$lib/components/ui/DataSelector.svelte";
     import StatusQuip from "$lib/components/ui/StatusQuip.svelte";
+    import corners from "$lib/../assets/images/corners.png"
+    import ParchmentTitle from "$lib/components/ui/ParchmentTitle.svelte";
+    import AnvilImpact from "@iconify-svelte/game-icons/components/a/anvil-impact.svelte";
+
 
     let { id } = $props()
     let locations = $state<Location[]>([])
@@ -75,89 +79,50 @@
     })
 </script>
 
-<section class="grid grid-cols-1 items-center justify-center p-4">
+<section class="h-full grid grid-cols-1 items-center justify-center px-2 ">
+    <div class="relative z-20 -mb-10 pointer-events-none">
+        <ParchmentTitle title="Locations" subtitle="Every record, every maps." />
+    </div>
+
     <form onsubmit={handleSubmit}>
-        <div class="w-full rounded-lg overflow-hidden shadow-2xl border-4 border-[#2b190c]">
-            <div class="p-5 rounded-t-md relative">
-                <div class="wood-texture-bg"></div>
+        <div class="relative w-full h-full shadow-2xl rounded-sm border-4 border-[#1a0f0f] bg-[#2b190c] p-1 md:p-1 grid grid-cols-1 grid-rows-1">
+            <div class="wood-texture-bg"></div>
 
-                <div class="iron-nail nail-tl"></div>
-                <div class="iron-nail nail-tr"></div>
-                <div class="iron-nail nail-bl"></div>
-                <div class="iron-nail nail-br"></div>
+            <img src="{corners}" alt="" class="absolute -top-4 -left-4 w-15 h-15 pointer-events-none z-10">
+            <img src="{corners}" alt="" class="absolute -top-4 -right-4 w-15 h-15 pointer-events-none z-10 scale-x-[-1]" />
+            <img src="{corners}" alt="" class="absolute -bottom-4 -left-4 w-15 h-15 pointer-events-none z-10 scale-y-[-1]" />
+            <img src="{corners}" alt="" class="absolute -bottom-4 -right-4 w-15 h-15 pointer-events-none z-10 rotate-180" />
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10 my-2">
-                    <div>
-                        <label for="title" class="block text-sm text-left ml-2 text-(--gold-text) mb-1 tracking-wider uppercase">
+            <div class="parchment-background relative w-full h-full grid grid-rows-[auto_1fr] z-10 border border-[#3b2a1e] p-4">
+                <div class="absolute inset-2 border border-[#8b7355]/40 pointer-events-none z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10 px-2 py-1 mb-4">
+                    <div class="grid grid-rows-[auto-auto]">
+                        <label for="title" class="forge-input-label">
                             Location Title*
                         </label>
-                        <div class="fantasy-input-wrapper flex items-center">
-                            <input type="text" name="name" class="fantasy-input" bind:value={formState.name} placeholder="Location name" required />
-                        </div>
+                        <input type="text" name="name" class="forge-input" bind:value={formState.name} placeholder="Location name" required />
                     </div>
                     <div class="relative">
-                        <DataSelector items={typeOptions} bind:value={formState.type} placeholder="Continent, Kingdom, City" labelText="Location Type*" required={true} />
+                        <DataSelector items={typeOptions} bind:value={formState.type} placeholder="Continent, Kingdom, City" labelText="Location Type*" required={true} variant='forge' />
                     </div>
                     <div class="relative">
-                        <DataSelector items={subtypeOptions} bind:value={formState.subtype} placeholder="Castle, Inn, Old farm..." labelText="Location Subtype" />
+                        <DataSelector items={subtypeOptions} bind:value={formState.subtype} placeholder="Castle, Inn, Old farm..." labelText="Location Subtype" variant='forge' />
                     </div>
                     <div class="relative">
-                        <DataSelector items={locationOptions} bind:value={formState.parentId} placeholder="Faerûn, Baldur's gate..." labelText="Parent location" />
+                        <DataSelector items={locationOptions} bind:value={formState.parentId} placeholder="Faerûn, Baldur's gate..." labelText="Parent location" variant='forge' />
                     </div>
                 </div>
-            </div>
-            <div class="bg-(--wood-dark) p-2">
                 <RichEditor bind:value={formState.description} />
+                <div class="border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
                 <div class="mt-2 flex items-center justify-between">
                     <StatusQuip isReady={isFormReady} missingType={missingFieldType} />
-                    <button type="submit" class="fantasy-btn-xl fantasy-bone-n-coper ">
-                        Inscribe
+                    <button type="submit" class="forge-btn forge-btn-base flex align-middle gap-2">
+                        <span><AnvilImpact height="1.6rem" /></span>
+                        <span>Inscribe</span>
                     </button>
                 </div>
             </div>
-
-
         </div>
     </form>
 </section>
-
-<!-- <section class="p-2">
-    <form onsubmit={handleSubmit}>
-        <div class="grid grid-cols-12 gap-1">
-            <div class="fantasy-border fantasy-border-brown fantasy-input-wrapper fantasy-input-inlay col-span-4 col-start-3">
-                <input type="text" name="name" bind:value={formState.name} placeholder="Location name" required />
-            </div>
-            <div class="fantasy-border fantasy-border-brown fantasy-input-wrapper fantasy-input-inlay col-span-4 col-start-7">
-                <input type="text" name="type" id="type" list="types" bind:value={formState.type} placeholder="World, Continent, Kingdom..." required title="Specifies what kind of location it is. A world, a continent, a kingdom...">
-                <datalist id="types">
-                    {#each types as type}
-                        <option value={type}></option>
-                    {/each}
-                </datalist>
-            </div>
-            <div class="fantasy-border fantasy-border-brown fantasy-input-wrapper fantasy-input-inlay col-span-4 col-start-3">
-                <input type="text" name="subtype" id="subtype" list="subtypes" bind:value={formState.subtype} placeholder="Castle, Inn, Old Farm..." title="A bigger specification for clarification, a Lord's dwelling, a dungeon keep...">
-                <datalist id="subtypes">
-                    {#each subtypes as subtype}
-                        <option value={subtype}></option>
-                    {/each}
-                </datalist>
-            </div>
-            <div class="fantasy-border fantasy-border-brown fantasy-input-wrapper fantasy-input-inlay col-span-4 col-start-7">
-                <input type="text" name="parent-location" id="parent-location" list="locations" bind:value={formState.parentName} placeholder="Faerûn, Baldur's gate..." title="If the location is within another. A Kingdom within a Continent, nor a Town inside a Kingdom.">
-                <datalist id="locations">
-                    {#each locations as location(location.id)}
-                        <option value={location.name}></option>
-                    {/each}
-                </datalist>
-            </div>
-        </div>
-
-        <RichEditor bind:value={formState.description} />
-        <div class="flex">
-            <button type="submit" class="fantasy-btn fantasy-bone-n-coper">
-                Save
-            </button>
-        </div>
-    </form>
-</section> -->

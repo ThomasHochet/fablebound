@@ -26,13 +26,13 @@
 {#if open}
     <!-- Fixed Backdrop Overlay -->
     <div
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
         onclick={close}
         role="presentation"
     >
         <!-- Unstyled Content Container (Stops click propagation so clicking inside won't close) -->
         <div
-            class="relative max-h-[90vh] w-full max-w-6xl overflow-y-auto"
+            class="relative max-h-[90vh] max-w-6xl overflow-y-auto rounded-md"
             onclick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"

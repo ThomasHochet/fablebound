@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Header from '$lib/components/layout/Header.svelte'
+    // import Header from '$lib/components/layout/Header.svelte'
     import Editor from '$lib/components/features/Editor.svelte';
     import { OpenEditorWindow } from '$wails/world-builder/app.js';
     import { onMount } from 'svelte';
@@ -43,7 +43,7 @@
     {#if isEditorWindow}
         <Editor section={currentSection} />
     {:else}
-        <Header onSelect={handleViewChange} />
+        <!-- <Header onSelect={handleViewChange} /> -->
         <Overview />
     {/if}
 </main>

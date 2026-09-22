@@ -49,6 +49,18 @@ func (s *FactionService) GetAllFactions() ([]models.Faction, error) {
 	return factions, nil
 }
 
+func (s *FactionService) GetFactionsWithAffiliations() ([]models.Faction, error) {
+	var factions []models.Faction
+
+	if err := s.db.Where("id IN (?)",
+		s.db.Model(&models.Affiliation{}).Select("faction_id").Where("faction_id IS NOT NULL"),
+	).Order("name ASC").Find(&factions).Error; err != nil {
+		return nil, err
+	}
+
+	return factions, nil
+}
+
 func (s *FactionService) UpdateFaction(faction models.Faction) (*models.Faction, error) {
 	if faction.ID == 0 {
 		return nil, fmt.Errorf("Cannot update faction without a valid ID.")
@@ -104,6 +116,16 @@ func (s *FactionService) GetAffiliation(id int64) (*models.Affiliation, error) {
 	}
 
 	return &affiliation, nil
+}
+
+func (s *FactionService) GetFactionAffiliations(id int64) ([]models.Affiliation, error) {
+	var affiliations []models.Affiliation
+
+	if err := s.db.Preload("Faction").Where("faction_id = ?", id).Find(&affiliations).Error; err != nil {
+		return nil, err
+	}
+
+	return affiliations, nil
 }
 
 func (s *FactionService) GetAllAffiliations() ([]models.Affiliation, error) {

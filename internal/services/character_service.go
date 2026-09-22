@@ -41,6 +41,12 @@ func (s *CharacterService) Create(char models.Character) (*models.Character, err
 		return nil, err
 	}
 
+	s.db.Model(&char).Association("PersonalityTraits").Replace(char.PersonalityTraits)
+	s.db.Model(&char).Association("Strengths").Replace(char.Strengths)
+	s.db.Model(&char).Association("Flaws").Replace(char.Flaws)
+	s.db.Model(&char).Association("Weaknesses").Replace(char.Weaknesses)
+	s.db.Model(&char).Association("Fears").Replace(char.Fears)
+
 	return s.GetByID(char.ID)
 }
 

@@ -10,7 +10,7 @@ type Character struct {
 	// Basic Identity & Status
 	Age         string `gorm:"size:50;default:'Unknown'" json:"age"` // String for "Unknown", "240", "Ageless"
 	Description string `gorm:"type:text" json:"description,omitempty"`
-	Portrait    string `gorm:"type:text" json:"portrait,omitempty"` // Image path or URL
+	Portrait    []byte `gorm:"type:blob" json:"portrait,omitempty"` // Image path or URL
 	Goals       string `gorm:"type:text" json:"goals,omitempty"`
 
 	// Foreign Keys for Single-Choice Lookups (Nullable pointers if optional)

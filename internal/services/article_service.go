@@ -16,22 +16,17 @@ func NewArticleService(db *gorm.DB) *ArticleService {
 	return &ArticleService{db: db}
 }
 
-func (s *ArticleService) Create(title, description, category string) (*models.Article, error) {
-	article := &models.Article{
-		Title:       title,
-		Description: description,
-		Category:    category,
-	}
+func (s *ArticleService) Create(article models.Article) (*models.Article, error) {
 
 	if err := article.Validate(); err != nil {
 		return nil, err
 	}
 
-	if err := s.db.Create(article).Error; err != nil {
+	if err := s.db.Create(&article).Error; err != nil {
 		return nil, fmt.Errorf("Failed to create article: %w", err)
 	}
 
-	return article, nil
+	return &article, nil
 }
 
 func (s *ArticleService) GetArticle(id int64) (*models.Article, error) {
@@ -70,24 +65,20 @@ func (s *ArticleService) GetCategories() ([]string, error) {
 	return categories, err
 }
 
-func (s *ArticleService) Update(id int64, title, description string) (*models.Article, error) {
-	article, err := s.GetArticle(id)
-	if err != nil {
-		return nil, err
+func (s *ArticleService) Update(article models.Article) (*models.Article, error) {
+	if article.ID == 0 {
+		return nil, fmt.Errorf("Cannot update character with an invalid ID")
 	}
 
-	article.Title = title
-	article.Description = description
+	// if err := article.Validate(); err != nil {
+	// 	return nil, err
+	// }
 
-	if err := article.Validate(); err != nil {
-		return nil, err
-	}
-
-	if err := s.db.Save(article).Error; err != nil {
+	if err := s.db.Save(&article).Error; err != nil {
 		return nil, fmt.Errorf("Couldn't update article: %w", err)
 	}
 
-	return article, nil
+	return &article, nil
 }
 
 func (s *ArticleService) Delete(id int64) error {

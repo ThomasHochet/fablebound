@@ -23,8 +23,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '$lib': path.resolve(import.meta.dirname, './src/lib'),
-      '$wails': path.resolve(import.meta.dirname, './bindings'),
+      '$lib': path.resolve(__dirname, './src/lib'),
+      '$wails': path.resolve(__dirname, './bindings'),
     }
   }
 })

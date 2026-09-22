@@ -101,9 +101,66 @@
 
     }
 
+    .forge-btn {
+        @apply flex items-center justify-center bg-gradient-to-b from-[#2b1b11] to-[#120a05] text-[#d4b27b] border border-[#523d2b] rounded-md px-4 py-2 text-xs font-serif font-bold tracking-wider uppercase shadow-md hover:brightness-110 active:translate-y-0.5 transition-all cursor-pointer
+    }
+
+    .forge-btn-xs {
+        @apply !px-2
+    }
+
+    .forge-btn-base {
+        @apply px-4! text-base!
+    }
+
+    .forge-input {
+        @apply border border-[#b7a48d] rounded-md pl-2 pr-3 py-1.5 text-base font-serif text-(--ink-color) placeholder-[#9c8974] focus:outline-none shadow-inner;
+    }
+
+    .forge-input-disabled {
+        @apply bg-black/20;
+    }
+
+    .forge-input-label {
+        @apply text-base font-serif mb-1 text-left ml-1;
+    }
+
+    .feather {
+        @apply h-6 z-200 absolute text-amber-300 top-9 left-9.5;
+    }
+
+    .open-book {
+        @apply h-7 z-200 absolute text-white top-8 left-9;
+    }
+
+    .check-mark {
+        @apply h-6 z-201 absolute text-green-700 top-10 left-11;
+    }
+
+    .death-skull {
+        @apply h-7 z-200 absolute text-rose-700 top-8.5 left-9;
+    }
+
     .parchment-background {
         background: linear-gradient(120deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
         border-radius: 2px;
+        /* Pop-up shadow lifting it slightly from the recessed hole floor, plus inner weathering */
+        box-shadow:
+            0 3px 6px rgba(0,0,0,0.7),
+            inset 0 0 20px rgba(139, 115, 85, 0.4),
+            inset 0 0 5px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .parchment-background-inner {
+        background: radial-gradient(
+            ellipse at center,
+            var(--parchment-light) 0%,
+            var(--parchment-light) 70%,
+            var(--parchment-base) 88%,
+            var(--parchment-dark) 100%
+        );
         /* Pop-up shadow lifting it slightly from the recessed hole floor, plus inner weathering */
         box-shadow:
             0 3px 6px rgba(0,0,0,0.7),
@@ -142,8 +199,8 @@
 
     .iron-nail {
         position: absolute;
-        width: 22px;
-        height: 22px;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
         /* Radial gradient creates the spherical metallic dome */
         background: radial-gradient(circle at 35% 35%, #8c9094 0%, #3a3c3f 40%, #0a0a0a 90%);
@@ -162,10 +219,10 @@
         background: radial-gradient(circle at 50% 50%, #000 0%, transparent 60%);
         box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
     }
-    .nail-tl { top: 8px; left: 8px; }
-    .nail-tr { top: 8px; right: 8px; }
-    .nail-bl { bottom: 8px; left: 8px; }
-    .nail-br { bottom: 8px; right: 8px; }
+    .nail-tl { top: 3px; left: 5px; }
+    .nail-tr { top: 3px; right: 5px; }
+    .nail-bl { bottom: 3px; left: 5px; }
+    .nail-br { bottom: 3px; right: 5px; }
 
     .fantasy-input-wrapper {
         background-color: var(--wood-dark);
@@ -203,6 +260,7 @@
         font-weight: bold;
         box-shadow: 0 2px 3px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         transition: all 0.1s ease;
+        z-index: 50;
     }
     .tool-btn:hover {
         background: linear-gradient(to bottom, #82532a, #5c3a1e);
@@ -226,10 +284,10 @@
     }
 
     .tool-bar {
-        @apply bg-[#2c1810] px-4 py-2 flex flex-wrap items-center gap-2 border-t-2 border-b-2 border-[#1a0e06];
+        @apply bg-[#2c1810] px-6 py-2 flex flex-wrap items-center gap-2 border-t-2 border-b-2 border-[#1a0e06] z-50;
     }
     .tool-divider {
-        @apply h-5 w-[1px] bg-[#4a2e16] mx-1;
+        @apply h-5 w-[1px] bg-[#4a2e16] mx-1 z-50;
     }
 }
 

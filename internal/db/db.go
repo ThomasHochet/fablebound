@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"reflect"
 	"world-builder/internal/models"
 
 	"github.com/glebarez/sqlite"
@@ -72,9 +73,19 @@ func emitDBEvent(d *gorm.DB, action string) {
 		return
 	}
 
+	val := d.Statement.ReflectValue
+	for val.Kind() == reflect.Pointer || val.Kind() == reflect.Interface {
+		val = val.Elem()
+	}
+
+	// Guard against slice/array association callbacks where primary key lookup fails
+	if !val.IsValid() || val.Kind() != reflect.Struct {
+		return
+	}
+
 	var id interface{}
-	if pk := d.Statement.Schema.PrioritizedPrimaryField; pk != nil {
-		id, _ = pk.ValueOf(d.Statement.Context, d.Statement.ReflectValue)
+	if d.Statement.Schema != nil && d.Statement.Schema.PrioritizedPrimaryField != nil {
+		id, _ = d.Statement.Schema.PrioritizedPrimaryField.ValueOf(d.Statement.Context, d.Statement.ReflectValue)
 	}
 
 	// 1. Verify GORM is firing the hook

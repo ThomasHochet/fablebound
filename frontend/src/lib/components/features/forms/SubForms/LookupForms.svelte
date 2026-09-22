@@ -88,7 +88,7 @@
                             type="button"
                             title="Delete  {item.label}"
                             onclick={() => handleDelete('gender', item.id)}
-                            class="text-black cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity p-1 invisible hover:visible"
+                            class="text-black cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity p-1"
                         >
                             <BroomIcon height="1rem" color="black" class="" />
                         </button>

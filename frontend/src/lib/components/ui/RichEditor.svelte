@@ -2,12 +2,12 @@
     import { Editor } from '@tiptap/core'
     import StarterKit from '@tiptap/starter-kit'
     import TextAlign from '@tiptap/extension-text-align'
-    import { BulletList, ListItem, OrderedList } from '@tiptap/extension-list'
+    import { BulletList, OrderedList } from '@tiptap/extension-list'
     import { Details, DetailsContent, DetailsSummary } from '@tiptap/extension-details'
     import Image from '@tiptap/extension-image'
     import { onDestroy, onMount, untrack } from 'svelte';
     import type { Snippet } from 'svelte'
-    import coverImage from "$lib/../assets/images/parchments/wooden-floor-background.jpg";
+    import CornerGrey from "$lib/../assets/images/corners_grey.png"
 
     import TextLeftIcon from '@iconify-svelte/bi/components/t/text-left.svelte'
     import TextCenterIcon from '@iconify-svelte/bi/components/t/text-center.svelte'
@@ -57,7 +57,7 @@
           TextAlign.configure({
             types: ['heading', 'paragraph']
           }),
-          ListItem,
+
           Image
         ],
         content: value,
@@ -104,7 +104,15 @@
 </script>
 
 {#if editor && !disabled}
-    <div class="ml-1 mb-1 text-left tool-bar">
+    <div class="relative ml-1 mb-1 text-left tool-bar rounded-lg z-10">
+        <!-- <div class="wood-texture-bg"></div> -->
+
+        <div class="iron-nail nail-tl"></div>
+        <div class="iron-nail nail-tr"></div>
+        <div class="iron-nail nail-bl"></div>
+        <div class="iron-nail nail-br"></div>
+
+
         <button
             type="button"
             title="Bold (Ctrl+B)"
@@ -292,13 +300,17 @@
 {/if}
 
 {#snippet editorBody()}
-    <div bind:this={element} class="h-full overflow-y-auto prose prose-invert text-xl pt-2"></div>
+    <div bind:this={element} class="h-full overflow-y-auto prose prose-invert text-lg pt-2"></div>
 {/snippet}
 
 <div
-    class={`fantasy-border px-5 parchment-base ${!disabled ? 'min-h-96 max-h-96 flex flex-col overflow-hidden cursor-text text-left' : (classes ?? '')}`}
+    class={`px-5 parchment-base ${!disabled ? 'min-h-96 max-h-96 flex flex-col overflow-hidden cursor-text text-left' : (classes ?? '')}`}
     onclick={() => !disabled && editor?.chain().focus().run()}
 >
+    <!-- <img src="{CornerGrey}" alt="" class="absolute -top-2 -left-2 w-12 h-12 pointer-events-none z-10">
+    <img src="{CornerGrey}" alt="" class="absolute -top-2 -right-2 w-12 h-12 pointer-events-none z-10 scale-x-[-1]" />
+    <img src="{CornerGrey}" alt="" class="absolute -bottom-2 -left-2 w-12 h-12 pointer-events-none z-10 scale-y-[-1]" />
+    <img src="{CornerGrey}" alt="" class="absolute -bottom-2 -right-2 w-12 h-12 pointer-events-none z-10 rotate-180" /> -->
 <!-- <div
     class={`fantasy-border px-5 ${!disabled ? 'min-h-96 max-h-963 flex flex-col overflow-hidden cursor-text text-left' : (classes ?? '')}`}
     style="--inlay-bg: url('{coverImage}') center/cover; --inlay-filter: blur(1px) brightness(1);"

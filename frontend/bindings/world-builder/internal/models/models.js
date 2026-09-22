@@ -452,6 +452,7 @@ export class Character {
      * @returns {Character}
      */
     static createFrom($$source = {}) {
+        const $$createField7_0 = $Create.ByteSlice;
         const $$createField18_0 = $$createType3;
         const $$createField19_0 = $$createType5;
         const $$createField20_0 = $$createType7;
@@ -469,6 +470,9 @@ export class Character {
         const $$createField32_0 = $$createType27;
         const $$createField33_0 = $$createType29;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("portrait" in $$parsedSource) {
+            $$parsedSource["portrait"] = $$createField7_0($$parsedSource["portrait"]);
+        }
         if ("gender" in $$parsedSource) {
             $$parsedSource["gender"] = $$createField18_0($$parsedSource["gender"]);
         }

@@ -19,24 +19,13 @@ import * as models$0 from "./internal/models/models.js";
 import * as services$0 from "./internal/services/models.js";
 
 /**
- * @param {string} title
- * @param {string} description
- * @returns {$CancellablePromise<models$0.Article | null>}
- */
-export function CreateArticle(title, description) {
-    return $Call.ByID(808668729, title, description).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType1($result);
-    }));
-}
-
-/**
  * @param {string} category
  * @param {string} label
  * @returns {$CancellablePromise<services$0.LookupItem | null>}
  */
 export function CreateLookup(category, label) {
     return $Call.ByID(1905389291, category, label).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType3($result);
+        return $$createType1($result);
     }));
 }
 
@@ -47,7 +36,7 @@ export function CreateLookup(category, label) {
  */
 export function CreateTrait(category, label) {
     return $Call.ByID(186843787, category, label).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType5($result);
+        return $$createType3($result);
     }));
 }
 
@@ -139,7 +128,7 @@ export function DeleteTrait(category, id) {
  */
 export function FetchAffiliation(id) {
     return $Call.ByID(390212899, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType7($result);
+        return $$createType5($result);
     }));
 }
 
@@ -148,7 +137,7 @@ export function FetchAffiliation(id) {
  */
 export function FetchAllAffiliations() {
     return $Call.ByID(3101345105).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType8($result);
+        return $$createType6($result);
     }));
 }
 
@@ -157,7 +146,7 @@ export function FetchAllAffiliations() {
  */
 export function FetchAllArticles() {
     return $Call.ByID(1341597461).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType9($result);
+        return $$createType8($result);
     }));
 }
 
@@ -167,7 +156,7 @@ export function FetchAllArticles() {
  */
 export function FetchAllCharacters(limit) {
     return $Call.ByID(3079915262, limit).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType11($result);
+        return $$createType10($result);
     }));
 }
 
@@ -176,7 +165,16 @@ export function FetchAllCharacters(limit) {
  */
 export function FetchAllFactions() {
     return $Call.ByID(1507432227).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType13($result);
+        return $$createType12($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<models$0.Faction[]>}
+ */
+export function FetchAllFactionsWithAffiliations() {
+    return $Call.ByID(3549550384).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType12($result);
     }));
 }
 
@@ -185,7 +183,7 @@ export function FetchAllFactions() {
  */
 export function FetchAllLocations() {
     return $Call.ByID(1722497314).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType15($result);
+        return $$createType14($result);
     }));
 }
 
@@ -195,7 +193,7 @@ export function FetchAllLocations() {
  */
 export function FetchAllLookup(category) {
     return $Call.ByID(1192268800, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType16($result);
+        return $$createType15($result);
     }));
 }
 
@@ -204,7 +202,7 @@ export function FetchAllLookup(category) {
  */
 export function FetchAllLore() {
     return $Call.ByID(1480822490).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType18($result);
+        return $$createType17($result);
     }));
 }
 
@@ -214,7 +212,7 @@ export function FetchAllLore() {
  */
 export function FetchAllTraits(category) {
     return $Call.ByID(758023059, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType19($result);
+        return $$createType18($result);
     }));
 }
 
@@ -224,7 +222,7 @@ export function FetchAllTraits(category) {
  */
 export function FetchArticle(id) {
     return $Call.ByID(4290365515, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType1($result);
+        return $$createType19($result);
     }));
 }
 
@@ -262,7 +260,7 @@ export function FetchCharacter(id) {
  */
 export function FetchCharacterLore(id) {
     return $Call.ByID(3290945214, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType18($result);
+        return $$createType17($result);
     }));
 }
 
@@ -287,11 +285,21 @@ export function FetchFaction(id) {
 }
 
 /**
+ * @param {number} id
+ * @returns {$CancellablePromise<models$0.Affiliation[]>}
+ */
+export function FetchFactionAffiliations(id) {
+    return $Call.ByID(3387832742, id).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType6($result);
+    }));
+}
+
+/**
  * @returns {$CancellablePromise<models$0.Lore[]>}
  */
 export function FetchGeneralLore() {
     return $Call.ByID(3493201601).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType18($result);
+        return $$createType17($result);
     }));
 }
 
@@ -330,7 +338,7 @@ export function FetchLocationTypes() {
  */
 export function FetchLookup(id, category) {
     return $Call.ByID(3984870629, id, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType3($result);
+        return $$createType1($result);
     }));
 }
 
@@ -350,7 +358,7 @@ export function FetchLore(id) {
  */
 export function FetchLoreByCategory(id) {
     return $Call.ByID(1076841158, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType18($result);
+        return $$createType17($result);
     }));
 }
 
@@ -369,7 +377,7 @@ export function FetchRelationship(id) {
  */
 export function FetchRoots() {
     return $Call.ByID(2764455836).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType15($result);
+        return $$createType14($result);
     }));
 }
 
@@ -380,7 +388,7 @@ export function FetchRoots() {
  */
 export function FetchTrait(category, id) {
     return $Call.ByID(1332298489, category, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType5($result);
+        return $$createType3($result);
     }));
 }
 
@@ -399,7 +407,17 @@ export function OpenEditorWindow(section) {
  */
 export function SaveAffiliation(affiliation) {
     return $Call.ByID(610365070, affiliation).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType7($result);
+        return $$createType5($result);
+    }));
+}
+
+/**
+ * @param {models$0.Article} art
+ * @returns {$CancellablePromise<models$0.Article | null>}
+ */
+export function SaveArticle(art) {
+    return $Call.ByID(2985474042, art).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType19($result);
     }));
 }
 
@@ -441,7 +459,7 @@ export function SaveLocation(location) {
  */
 export function SaveLookup(id, label, category) {
     return $Call.ByID(3052816934, id, label, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType3($result);
+        return $$createType1($result);
     }));
 }
 
@@ -484,51 +502,49 @@ export function SaveRelationships(relationship) {
  */
 export function SaveTrait(id, label, category) {
     return $Call.ByID(1236566724, id, label, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType5($result);
+        return $$createType3($result);
     }));
 }
 
 /**
- * @param {number} id
- * @param {string} title
- * @param {string} description
+ * @param {models$0.Article} art
  * @returns {$CancellablePromise<models$0.Article | null>}
  */
-export function UpdateArticle(id, title, description) {
-    return $Call.ByID(3751245430, id, title, description).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType1($result);
+export function UpdateArticle(art) {
+    return $Call.ByID(3751245430, art).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType19($result);
     }));
 }
 
 // Private type creation functions
-const $$createType0 = models$0.Article.createFrom;
+const $$createType0 = services$0.LookupItem.createFrom;
 const $$createType1 = $Create.Nullable($$createType0);
-const $$createType2 = services$0.LookupItem.createFrom;
+const $$createType2 = services$0.TraitItem.createFrom;
 const $$createType3 = $Create.Nullable($$createType2);
-const $$createType4 = services$0.TraitItem.createFrom;
+const $$createType4 = models$0.Affiliation.createFrom;
 const $$createType5 = $Create.Nullable($$createType4);
-const $$createType6 = models$0.Affiliation.createFrom;
-const $$createType7 = $Create.Nullable($$createType6);
-const $$createType8 = $Create.Array($$createType6);
-const $$createType9 = $Create.Array($$createType0);
-const $$createType10 = models$0.Character.createFrom;
-const $$createType11 = $Create.Array($$createType10);
-const $$createType12 = models$0.Faction.createFrom;
-const $$createType13 = $Create.Array($$createType12);
-const $$createType14 = models$0.Location.createFrom;
-const $$createType15 = $Create.Array($$createType14);
-const $$createType16 = $Create.Array($$createType2);
-const $$createType17 = models$0.Lore.createFrom;
-const $$createType18 = $Create.Array($$createType17);
-const $$createType19 = $Create.Array($$createType4);
+const $$createType6 = $Create.Array($$createType4);
+const $$createType7 = models$0.Article.createFrom;
+const $$createType8 = $Create.Array($$createType7);
+const $$createType9 = models$0.Character.createFrom;
+const $$createType10 = $Create.Array($$createType9);
+const $$createType11 = models$0.Faction.createFrom;
+const $$createType12 = $Create.Array($$createType11);
+const $$createType13 = models$0.Location.createFrom;
+const $$createType14 = $Create.Array($$createType13);
+const $$createType15 = $Create.Array($$createType0);
+const $$createType16 = models$0.Lore.createFrom;
+const $$createType17 = $Create.Array($$createType16);
+const $$createType18 = $Create.Array($$createType2);
+const $$createType19 = $Create.Nullable($$createType7);
 const $$createType20 = $Create.Array($Create.Any);
 const $$createType21 = models$0.LoreCategory.createFrom;
 const $$createType22 = $Create.Array($$createType21);
-const $$createType23 = $Create.Nullable($$createType10);
+const $$createType23 = $Create.Nullable($$createType9);
 const $$createType24 = models$0.Relationship.createFrom;
 const $$createType25 = $Create.Array($$createType24);
-const $$createType26 = $Create.Nullable($$createType12);
-const $$createType27 = $Create.Nullable($$createType14);
-const $$createType28 = $Create.Nullable($$createType17);
+const $$createType26 = $Create.Nullable($$createType11);
+const $$createType27 = $Create.Nullable($$createType13);
+const $$createType28 = $Create.Nullable($$createType16);
 const $$createType29 = $Create.Nullable($$createType24);
 const $$createType30 = $Create.Nullable($$createType21);
