@@ -5,16 +5,34 @@
   import DataSelector from "$lib/components/ui/DataSelector.svelte";
   import StatusQuip from "$lib/components/ui/StatusQuip.svelte";
   import { LookupItem, TraitItem } from "$wails/world-builder/internal/services/models";
-  import { Affiliation, Character, Faction, Location } from "$wails/world-builder/internal/models/models";
+  import { Affiliation, Character, Faction, Location, Lore, LoreCategory, Relationship } from "$wails/world-builder/internal/models/models";
   import { loadCharacterFormData } from '$lib/functions/services'
     import Divider from "$lib/components/ui/Divider.svelte";
     import PortraitPicker from "$lib/components/ui/PortraitPicker.svelte";
     import MultiDataSelector from "$lib/components/ui/MultiDataSelector.svelte";
-    import { FetchCharacter, SaveCharacter } from "$wails/world-builder/app";
+    import { FetchAllCharactersLookup, FetchBackstoryCategory, FetchCharacter, SaveCharacter } from "$wails/world-builder/app";
     import ParchmentTitle from "$lib/components/ui/ParchmentTitle.svelte";
     import AnvilImpact from "@iconify-svelte/game-icons/components/a/anvil-impact.svelte";
+    import  SaveToast, { type SaveStatus } from "$lib/components/ui/SaveToast.svelte";
+    import { Window } from "@wailsio/runtime";
+    import { logError } from "$lib/logger";
+
+  interface RelationshipPayload {
+    id?: number
+    target_char_id: number | null
+    type: string // e.g. Sibling, Rival, Mortal Enemy
+    notes: string
+  }
+
+  interface LorePayload {
+    id?: number
+    title: string
+    content: string
+    category_id?: number | null
+  }
 
   let { id } = $props()
+  let status = $state<SaveStatus>('idle')
   let formState = $state({
     firstname: '',
     middlename: '',
@@ -43,8 +61,8 @@
     weaknesses: [] as number[],
     fears: [] as number[],
 
-    relationships: [],
-    backstories: []
+    relationships: [] as RelationshipPayload[],
+    backstories: [] as LorePayload[]
   })
 
   let genders = $state<LookupItem[]>([])
@@ -63,13 +81,21 @@
   let affiliations = $state<Affiliation[]>([])
   let factions = $state<Faction[]>([])
 
+  let allCharacters = $state<LookupItem[]>([])
+  let backstoryCategory = $state<LoreCategory | null>(null)
+
   // For affiliation belonging to a faction
   let isFactionLocked = $state(false)
+
+  let allCharactersOmitSelf = $derived.by(() => {
+    return allCharacters.filter(c => c.id !== (id ? Number(id) : 0))
+  })
 
   const mapToIds = <T>(ids: number[]) => ids.map((id) => ({ id  } as unknown as T));
 
   async function handleSubmit(e: Event) {
     e.preventDefault()
+    status = 'saving'
     const rawBase64 = formState.portrait.split(',')[1]
     try {
       const payload = new Character({
@@ -83,12 +109,35 @@
         weaknesses: mapToIds(formState.weaknesses),
         fears: mapToIds(formState.fears),
 
-        relationships: [],
-        backstories: []
+        relationships: formState.relationships.map((rel) => new Relationship({
+          id: rel.id,
+          source_char_id: id ? Number(id) : 0,
+          target_char_id: rel.target_char_id ?? 0,
+          type: rel.type,
+          notes: rel.notes
+        })),
+        backstories: formState.backstories.map((lore) => new Lore({
+          id: lore.id,
+          title: lore.title,
+          content: lore.content,
+          character_id: id ? Number(id) : undefined,
+          category_id: backstoryCategory?.id ?? 0
+        }))
+
       })
       await SaveCharacter(payload)
+      status = 'saved'
+
+      setTimeout(() => {
+        if (status === 'saved') status = 'idle'
+      }, 3000)
+
+      setTimeout(() => {
+        Window.Close()
+      }, 1500)
     } catch(err) {
-      console.error(err)
+      logError(`Failed to save character`, err)
+      status = 'error'
     }
   }
 
@@ -114,12 +163,21 @@
       affiliations = data.affiliations
       factions = data.factions
 
+      backstoryCategory = await FetchBackstoryCategory()
+      allCharacters = await FetchAllCharactersLookup()
+
       if(id) {
         const charToEdit = await FetchCharacter(Number(id))
         if (charToEdit) {
           Object.assign(formState, charToEdit)
 
-          const extractIds = (items: any[]) => items?.map(item => item.id) || [];
+          if(charToEdit.portrait) {
+            if(!charToEdit.portrait.startsWith('data:image')){
+              formState.portrait = `data:image/png;base64,${charToEdit.portrait}`
+            }
+          }
+
+          const extractIds = <T>(items: any[]) => items?.map(item => item.id) || [];
 
           formState.personality_traits = extractIds(charToEdit.personality_traits)
           formState.strengths = extractIds(charToEdit.strengths)
@@ -129,15 +187,29 @@
         }
       }
     } catch(err) {
-      console.error(err)
+      logError("Failed to fetch character('s) data", err)
     }
   }
 
-  onMount(() => {
-    fetchData()
-  })
+  function addRelationship() {
+    formState.relationships = [...formState.relationships, { target_char_id: null, type: '', notes: '' }]
+  }
+
+  function removeRelationship(index: number) {
+    formState.relationships = formState.relationships.filter((_, i) => i !== index)
+  }
+
+  function addBackstory() {
+    formState.backstories = [...formState.backstories, { title: '', content: '' }]
+  }
+
+  function removeBackstory(index: number) {
+    formState.backstories = formState.backstories.filter((_, i) => i !== index)
+  }
 
   $effect(() => {
+    fetchData()
+
     if (formState.affiliation_id) {
       const selectedAffiliation = affiliations.find(a => a.id === formState.affiliation_id)
 
@@ -233,18 +305,23 @@
                         <label for="title" class="forge-input-label">
                             Goals
                         </label>
-                        <RichEditor bind:value={formState.goals} />
+                        <div class="border border-[#8b7355]/40 rounded-xl">
+                            <RichEditor bind:value={formState.goals} />
+                        </div>
                     </div>
 
                     <div class="grid grid-rows-[auto-auto] relative">
-                        <div class="absolute -left-1.5 top-3 bottom-3 w-px bg-[#8b7355]/40 pointer-events-none"></div>
+                        <!-- <div class="absolute -left-2 top-3 bottom-3 w-px bg-[#8b7355]/40 pointer-events-none"></div> -->
+
                         <label for="title" class="forge-input-label">
                             Physical Description
                         </label>
-                        <RichEditor bind:value={formState.description} />
+                        <div class="border border-[#8b7355]/40 rounded-xl">
+                            <RichEditor bind:value={formState.description} />
+                        </div>
                     </div>
 
-                    <div class="mb-3 mt-8 col-span-2 border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
+                    <div class="mb-3 mt-4 col-span-2 border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
 
                     <div class="relative">
                         <DataSelector items={occupations} bind:value={formState.occupation_id} placeholder="Guard, Warrior, Unknown ..." labelText="Occupation" selectOnly={true} variant="forge" />
@@ -285,6 +362,74 @@
                     <div class="relative">
                         <MultiDataSelector items={fears} bind:value={formState.fears} placeholder="Death, Spiders, ..." labelText="Fears" variant="forge" />
                     </div>
+
+                    <!-- BACKSTORIES SECTION -->
+                    <div class="mb-3 mt-3 col-span-2 border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
+                    <div class="col-span-2 grid grid-cols-1 gap-4">
+                        <h1 class="text-3xl text-(--ink-color) font-serif">Backstories</h1>
+
+                        {#each formState.backstories as backstory, i}
+                            <div class="relative p-4 border border-[#8b7355]/40 rounded-sm">
+                                <button type="button" class="absolute top-2 right-4 text-(--ink-color)! font-bold" onclick={() => removeBackstory(i)}>
+                                    ✕ Remove
+                                </button>
+
+                                <div class="grid grid-rows-[auto-auto] mb-4 w-3/4">
+                                    <label class="forge-input-label">Era / Chapter Title</label>
+                                    <input type="text" class="forge-input" bind:value={backstory.title} placeholder="e.g., The Early Years" required />
+                                </div>
+
+                                <div class="grid grid-rows-[auto-auto]">
+                                    <label class="forge-input-label">Story</label>
+                                    <div class="border border-[#8b7355]/40 rounded-xl">
+                                        <RichEditor bind:value={backstory.content} />
+                                    </div>
+
+                                </div>
+                            </div>
+                        {/each}
+
+                        <div>
+                            <button type="button" class="forge-btn forge-btn-base text-sm py-1 px-4" onclick={addBackstory}>
+                                + Add Backstory Entry
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RELATIONSHIPS SECTION -->
+                    <div class="mb-3 mt-3 col-span-2 border-b border-[#8b7355]/40 pointer-events-none z-0"></div>
+                    <div class="col-span-2 grid grid-cols-1 gap-4">
+                        <h1 class="text-3xl text-(--ink-color) font-serif">Relationships</h1>
+
+                        {#each formState.relationships as rel, i}
+                            <div class="relative p-4 border border-[#8b7355]/40 rounded-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <button type="button" class="absolute top-2 right-4 text-(--ink-color)! font-bold z-20" onclick={() => removeRelationship(i)}>
+                                    ✕ Remove
+                                </button>
+
+                                <div class="relative mt-4">
+                                    <!-- Assumes you fetch allCharacters into a LookupItem array -->
+                                    <DataSelector items={allCharactersOmitSelf} bind:value={rel.target_char_id} placeholder="Select Character..." labelText="Related Character" selectOnly={true} variant="forge" />
+                                </div>
+
+                                <div class="grid grid-rows-[auto-auto] mt-4">
+                                    <label class="forge-input-label">Relationship Type</label>
+                                    <input type="text" class="forge-input" bind:value={rel.type} placeholder="Brother, Mentor, Rival..." required />
+                                </div>
+
+                                <div class="grid grid-rows-[auto-auto] col-span-2">
+                                    <label class="forge-input-label">Context / Notes</label>
+                                    <input type="text" class="forge-input" bind:value={rel.notes} placeholder="Brief details about their dynamic..." />
+                                </div>
+                            </div>
+                        {/each}
+
+                        <div>
+                            <button type="button" class="forge-btn forge-btn-base text-sm py-1 px-4" onclick={addRelationship}>
+                                + Add Relationship
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -299,4 +444,6 @@
             </div>
         </div>
     </form>
+
+    <SaveToast {status} />
 </section>

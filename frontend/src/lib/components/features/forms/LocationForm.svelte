@@ -8,9 +8,12 @@
     import corners from "$lib/../assets/images/corners.png"
     import ParchmentTitle from "$lib/components/ui/ParchmentTitle.svelte";
     import AnvilImpact from "@iconify-svelte/game-icons/components/a/anvil-impact.svelte";
-
+    import  SaveToast, { type SaveStatus } from "$lib/components/ui/SaveToast.svelte";
+    import { Window } from "@wailsio/runtime";
+    import { logError } from "$lib/logger";
 
     let { id } = $props()
+    let status = $state<SaveStatus>('idle')
     let locations = $state<Location[]>([])
     let types = $state<string[]>([])
     let subtypes = $state<string[]>([])
@@ -32,19 +35,33 @@
     )
 
     async function handleSubmit(e: Event) {
-      e.preventDefault()
+      try {
+        e.preventDefault()
+        status = 'saving'
 
-      const payload = new Location({
-        id: id ? Number(id) : undefined,
-        name: formState.name,
-        type: formState.type,
-        subtype: formState.subtype,
-        parent_id: formState.parentId,
-        description: formState.description
-      })
+        const payload = new Location({
+          id: id ? Number(id) : undefined,
+          name: formState.name,
+          type: formState.type,
+          subtype: formState.subtype,
+          parent_id: formState.parentId,
+          description: formState.description
+        })
 
-      const result = await SaveLocation(payload)
-      console.info(result)
+        const result = await SaveLocation(payload)
+        status = 'saved'
+
+        setTimeout(() => {
+          if (status === 'saved') status = 'idle'
+        }, 3000)
+
+        setTimeout(() => {
+          Window.Close()
+        }, 1500)
+      } catch(err) {
+        logError("Failed to save Location", err)
+        status = 'error'
+      }
     }
 
     let isFormReady = $derived(Boolean(formState.name.trim() && formState.type === ''))
@@ -70,7 +87,7 @@
           }
         }
       } catch(err) {
-        console.error(err)
+        logError("Failed to fetch Location data", err)
       }
     }
 
@@ -125,4 +142,6 @@
             </div>
         </div>
     </form>
+
+    <SaveToast {status} />
 </section>

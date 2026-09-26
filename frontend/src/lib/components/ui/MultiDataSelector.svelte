@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { logError } from "$lib/logger";
+
     type SelectValue = number | string;
 
     type SelectItem = {
@@ -154,7 +156,7 @@
                 }
             }
         } catch (err) {
-            console.error("Failed to forge new entry", err);
+            logError("Failed to forge new entry", err);
         } finally {
             isCreating = false;
         }

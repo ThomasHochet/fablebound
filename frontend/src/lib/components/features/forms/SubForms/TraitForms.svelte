@@ -6,6 +6,7 @@
   import DataTableManager from "$lib/components/ui/DataTableManager.svelte";
 
   import BroomIcon from "@iconify-svelte/game-icons/components/b/broom.svelte"
+    import { logError } from "$lib/logger";
 
   let personalityTraits = $state<TraitItem[]>([])
   let strengths = $state<TraitItem[]>([])
@@ -18,7 +19,7 @@
       const newItem = await CreateTrait(traitTable, label)
       return newItem
     } catch(err) {
-      console.error(`Failed to create ${traitTable}:`, err)
+      logError(`Failed to create ${traitTable}:`, err)
       return null
     }
   }
@@ -28,7 +29,7 @@
       await SaveTrait(id, label, traitTable)
       return true
     } catch(err) {
-      console.error(err)
+      logError(`Failed to update ${traitTable}`, err)
       return null
     }
   }
@@ -37,7 +38,7 @@
     try {
       await DeleteTrait(traitTable, id)
     } catch(err) {
-      console.error(`Failed to delete from ${traitTable}:`, err)
+      logError(`Failed to delete from ${traitTable}:`, err)
     }
   }
 
@@ -49,7 +50,7 @@
       weaknesses = await FetchAllTraits("weakness")
       fears = await FetchAllTraits("fear")
     } catch(err) {
-      console.error(err)
+      logError("Failed to fetch Traits data", err)
     }
   }
 

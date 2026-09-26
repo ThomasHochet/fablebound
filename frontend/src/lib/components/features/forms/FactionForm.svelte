@@ -1,5 +1,4 @@
 <script lang="ts">
-    import FactionModal from "./SubForms/FactionModal.svelte";
     import { DeleteFaction, FetchAffiliation, FetchAllFactions, FetchFaction, FetchFactionAffiliations, SaveAffiliation, SaveFaction } from "$wails/world-builder/app";
     import { Faction, Affiliation } from "$wails/world-builder/internal/models/models";
     import { onMount } from "svelte";
@@ -13,8 +12,12 @@
     import CrossMark from "@iconify-svelte/game-icons/components/c/cross-mark.svelte";
     import Modal from "../Modal.svelte";
     import { subscribe } from "$lib/functions/subscribe";
+    import  SaveToast, { type SaveStatus } from "$lib/components/ui/SaveToast.svelte";
+    import { Window } from "@wailsio/runtime";
+    import { logError } from "$lib/logger";
 
     let { id } = $props();
+    let status = $state<SaveStatus>('idle')
     let isModalOpen = $state(false)
     let modalType = $state('edit')
     let isLoading = $state(true)
@@ -58,6 +61,7 @@
 
     async function handleSubmit(e: SubmitEvent) {
         e.preventDefault();
+        status = 'saving'
         try {
           const payload = new Affiliation({
             id: id ? Number(id) : undefined,
@@ -67,8 +71,18 @@
             faction_id: affiliation.factionId
           })
           const createdAffiliation = await SaveAffiliation(payload)
+          status = 'saved'
+
+          setTimeout(() => {
+            if (status === 'saved') status = 'idle'
+          }, 3000)
+
+          setTimeout(() => {
+            Window.Close()
+          }, 1500)
         } catch(err) {
-          console.error(err)
+          logError("Failed to save Affiliation", err)
+          status = 'error'
         }
     }
 
@@ -76,7 +90,7 @@
       try {
           factions = await FetchAllFactions()
       } catch(err) {
-          console.error("Failed to load factions.", err)
+          logError("Failed to load factions.", err)
       } finally {
           isLoading = false;
       }
@@ -91,7 +105,7 @@
         affiliation.type = affiliationData?.type ?? ''
         affiliation.factionId = affiliationData?.faction?.id ?? null
       } catch(err) {
-        console.error("Failed to load Faction.", err)
+        logError(`Failed to load affiliation id:${id}.`, err)
       } finally {
         isLoading = false;
       }
@@ -115,7 +129,7 @@
             affiliation.factionId = createdFaction.id
           }
         } catch(err) {
-          console.error(err)
+          logError("Failed to save Faction", err)
         }
     }
 
@@ -146,7 +160,7 @@
       if (!isNaN(numericId)) {
         loadAffiliation(numericId)
       } else {
-        console.error("Invalid provided ID", id)
+        logError(`Invalid id to load Affiliation ${id}.`, id)
       }
 
       return subscribe('factions', loadFactions)
@@ -217,6 +231,8 @@
                 </div>
         </div>
     </form>
+
+    <SaveToast {status} />
 </section>
 
 <Modal bind:open={isModalOpen}>

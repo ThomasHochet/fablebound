@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"reflect"
+	"world-builder/internal/logger"
 	"world-builder/internal/models"
 
 	"github.com/glebarez/sqlite"
@@ -13,6 +14,7 @@ import (
 func InitDB(dbFileName string) (*gorm.DB, error) {
 	db, err := gorm.Open(sqlite.Open(dbFileName), &gorm.Config{})
 	if err != nil {
+		logger.LogError("DB:Connect", err)
 		return nil, fmt.Errorf("Failed to connect to database: %w", err)
 	}
 
@@ -46,7 +48,13 @@ func InitDB(dbFileName string) (*gorm.DB, error) {
 		&models.Article{},
 	)
 	if err != nil {
+		logger.LogError("DB:Migrate", err)
 		return nil, fmt.Errorf("Failed to auto-migrate schema: %w", err)
+	}
+
+	if err := SeedLoreCategories(db); err != nil {
+		logger.LogError("DB:Seed", err)
+		return nil, fmt.Errorf("Failed to seed default categories: %w", err)
 	}
 
 	RegisterWailsNotifier(db)
@@ -90,6 +98,7 @@ func emitDBEvent(d *gorm.DB, action string) {
 
 	// 1. Verify GORM is firing the hook
 	fmt.Printf("--> GORM Hook Fired: Action='%s', Table='%s', ID='%v'\n", action, d.Statement.Table, id)
+	// logger.LogInfo("DB:Hook", )
 
 	app := application.Get()
 	if app == nil {
@@ -105,4 +114,16 @@ func emitDBEvent(d *gorm.DB, action string) {
 		"action": action,
 		"id":     id,
 	})
+}
+
+func SeedLoreCategories(db *gorm.DB) error {
+	defaultCategories := []string{"Backstory"}
+
+	for _, label := range defaultCategories {
+		category := models.LoreCategory{Label: label}
+		if err := db.Where("label = ?", label).FirstOrCreate(&category).Error; err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { FetchAllLore, DeleteLore, DeleteLoreCategory, OpenEditorWindow } from "$wails/world-builder/app";
+    import { FetchAllLore, DeleteLore, DeleteLoreCategory, OpenEditorWindow, OpenReaderWindow, FetchGeneralLore } from "$wails/world-builder/app";
     import BottomButton from "$lib/components/ui/BottomButton.svelte";
     import { onMount } from "svelte";
     import { Lore, LoreCategory } from "$wails/world-builder/internal/models/models";
@@ -10,6 +10,7 @@
     import corners from "$lib/../assets/images/corners.png"
     import QuillInk from "@iconify-svelte/game-icons/components/q/quill-ink.svelte";
     import Modal from "$lib/components/features/Modal.svelte";
+    import { logError } from "$lib/logger";
 
     let isLoading = $state(true)
     let lores = $state<Lore[]>([])
@@ -17,15 +18,15 @@
     let loreRdyToDel = $state<number>()
     let readyToDeleteData = $derived(lores.find(l => (l.id === loreRdyToDel)))
 
-    function handleOpen() {
-      OpenEditorWindow('lore/form').catch(err => {
-        console.error("Failed to open window", err)
+    function handleOpen(id: number, title: string) {
+      OpenReaderWindow('lore', id, title).catch(err => {
+        logError(`Failed to open lore reader: ${id}:${title}`, err)
       })
     }
 
     function handleEdit(id: number) {
-      OpenEditorWindow(`lore/form/${id}`).catch(err => {
-        console.error("Failed to open window", err)
+      OpenEditorWindow('lore', id).catch(err => {
+        logError("Failed to open window", err)
       })
     }
 
@@ -39,9 +40,9 @@
 
     async function fetchData() {
       try {
-        lores = await FetchAllLore()
+        lores = await FetchGeneralLore()
       } catch(err) {
-        console.error("Failed to load lores.", err)
+        logError("Failed to load lores.", err)
       } finally {
         isLoading = false
       }
@@ -54,36 +55,18 @@
     })
 </script>
 
-<!-- <section id="lore-overview65" class="w-full min-h-0 h-screen grid grid-cols-12 content-start p-1 gap-1 overflow-y-auto!">
-    {#each lores as lore (lore.id)}
-        <RichEditor disabled bind:value={lore.content} classes="col-span-6 min-h-36 max-h-52 p-0.5">
-            {#snippet children(prose)}
-                <div class="grid grid-cols-6 h-full" style="">
-                    <p class="col-span-3">{@html lore.title}</p>
-                    <p class="col-span-3 text-gray-500">{lore.lore_category?.label}</p>
-                    <hr class="col-span-6">
-                    <div class="col-span-6 flex min-w-0 text-left h-full self-start truncate! overflow-hidden!">
-                        {@render prose()}
-                    </div>
-                    <div class="col-span-6 justify-items-center mb-1">
-                        <button class="fantasy-btn-md fantasy-bone-n-coper" onclick={() => handleEdit(lore.id)}>Edit</button>
-                        <button class="fantasy-btn-md fantasy-bone-n-coper" onclick={() => handleDelete(lore.id)}>Delete</button>
-                    </div>
-                </div>
-            {/snippet}
-        </RichEditor>
-    {/each}
-
-    <BottomButton onclick={handleOpen}>Add</BottomButton>
-</section> -->
-
 {#each lores as lore(lore.id)}
-    {console.log(lore)}
-    <Card title={lore.title} category={lore.lore_category?.label} description={lore.content} variant={lore.lore_category?.label.toLowerCase()} onEdit={() => handleEdit(lore.id)}
+    <Card
+        title={lore.title}
+        category={lore.lore_category?.label}
+        description={lore.content}
+        variant={lore.lore_category?.label.toLowerCase()}
+        onEdit={() => handleEdit(lore.id)}
         onDelete={() => {
           loreRdyToDel = lore?.id
           isModalOpen = true
         }}
+        dblClickEvent={() => handleOpen(lore.id, lore.title)}
     />
 {/each}
 

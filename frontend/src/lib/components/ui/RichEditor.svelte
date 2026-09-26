@@ -104,7 +104,7 @@
 </script>
 
 {#if editor && !disabled}
-    <div class="relative ml-1 mb-1 text-left tool-bar rounded-lg z-10">
+    <div class="relative mb-1 text-left tool-bar rounded-lg z-10">
         <!-- <div class="wood-texture-bg"></div> -->
 
         <div class="iron-nail nail-tl"></div>

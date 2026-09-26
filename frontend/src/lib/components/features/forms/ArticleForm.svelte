@@ -10,6 +10,7 @@
     import { Article } from "$wails/world-builder/internal/models/models";
     import SaveToast, { type SaveStatus } from "$lib/components/ui/SaveToast.svelte";
     import { Window } from "@wailsio/runtime";
+    import { logError } from "$lib/logger";
 
 
     let { id } = $props()
@@ -54,7 +55,7 @@
           Window.Close()
         }, 1500)
       } catch(err) {
-        console.error("Failed to save world article:", err)
+        logError("Failed to save world article:", err)
         status = 'error'
       }
     }
@@ -63,7 +64,7 @@
       try {
         categories = await FetchArticleCategories()
       } catch(err){
-        console.error(err)
+        logError("Failed to fetch Article Categories", err)
       }
     }
 
@@ -75,7 +76,7 @@
         formState.category = aData?.category ?? ''
         formState.tags = aData?.tags ?? ''
       } catch(err) {
-        console.error(err)
+        logError(`Failed to fetch article id:${id}`, err)
       }
     }
 

@@ -4,13 +4,14 @@
     import Card from '$lib/components/ui/Card.svelte';
     import RichEditor from '$lib/components/ui/RichEditor.svelte';
     import { subscribe } from '$lib/functions/subscribe';
-    import { DeleteAffiliation, DeleteFaction, FetchAllAffiliations, FetchAllFactions, OpenEditorWindow } from '$wails/world-builder/app';
+    import { DeleteAffiliation, DeleteFaction, FetchAllAffiliations, FetchAllFactions, OpenEditorWindow, OpenReaderWindow } from '$wails/world-builder/app';
     import { Faction, Affiliation } from '$wails/world-builder/internal/models/models'
     import { onMount } from 'svelte';
     import corners from "$lib/../assets/images/corners.png"
     import QuillInk from "@iconify-svelte/game-icons/components/q/quill-ink.svelte";
     import CrossMark from "@iconify-svelte/game-icons/components/c/cross-mark.svelte";
     import Modal from "$lib/components/features/Modal.svelte";
+    import { logError } from '$lib/logger';
 
     let isLoading = $state(true)
     let factions = $state<Faction[]>([])
@@ -36,30 +37,40 @@
         factions = fData ?? []
         affiliations = aData ?? []
       } catch(err) {
-        console.error("Failed to load data", err)
+        logError("Failed to load data", err)
       } finally {
         isLoading = false
       }
     }
 
-
-
     function handleEdit(kind: 'faction' | 'affiliation', id: number) {
-      OpenEditorWindow(`faction/form/${id}`).catch(err => {
-        console.error("Failed to open window,", err)
+      OpenEditorWindow('faction', id).catch(err => {
+        logError("Failed to open window,", err)
       })
     }
 
-    async function handleDelete(kind: 'faction' | 'affiliation' | undefined, id: number) {
-      console.log(kind, id)
+    function handleOpen(id: number, title: string, type: string) {
+      if (type === 'faction') {
+        OpenReaderWindow('faction', id, title).catch(err => {
+          logError(`Failed to open faction reader for ${id}:${title}`, err)
+        })
+      } else {
+        OpenReaderWindow('affiliation', id, title).catch(err => {
+          logError(`Failed to open faction reader for ${id}:${title}`, err)
+        })
+      }
+    }
+
+    async function handleDelete(kind: 'faction' | 'affiliation' | undefined, id: number | undefined) {
+      const numId = id ? Number(id) : 0
       try {
         if (kind === 'affiliation')
-          DeleteAffiliation(id)
+          DeleteAffiliation(numId)
         else
-          DeleteFaction(id)
+          DeleteFaction(numId)
         isModalOpen = false
       } catch(err) {
-        console.error("Failed to delete affiliation", err)
+        logError("Failed to delete affiliation", err)
       } finally {
         isLoading = true
       }
@@ -96,6 +107,7 @@
           isModalOpen = true
           facRdyToDel = item
         }}
+        dblClickEvent={() => handleOpen(item.id, `${item.type || 'Affiliation'}: ${item.name}`, 'affiliation')}
     />
 {/snippet}
 
@@ -110,6 +122,7 @@
           isModalOpen = true
           facRdyToDel = item
         }}
+        dblClickEvent={() => handleOpen(item.id, "Faction: " + item.name, 'faction')}
 	/>
 {/snippet}
 

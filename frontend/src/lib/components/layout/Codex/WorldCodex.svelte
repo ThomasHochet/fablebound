@@ -2,12 +2,13 @@
     import Modal from "$lib/components/features/Modal.svelte";
     import Card from "$lib/components/ui/Card.svelte";
     import { subscribe } from "$lib/functions/subscribe";
-    import { DeleteArticle, FetchAllArticles, OpenEditorWindow } from "$wails/world-builder/app";
+    import { DeleteArticle, FetchAllArticles, OpenEditorWindow, OpenReaderWindow } from "$wails/world-builder/app";
     import { Article } from "$wails/world-builder/internal/models/models";
     import { onMount } from "svelte";
     import corners from "$lib/../assets/images/corners.png"
     import QuillInk from "@iconify-svelte/game-icons/components/q/quill-ink.svelte";
     import CrossMark from "@iconify-svelte/game-icons/components/c/cross-mark.svelte";
+    import { logError } from "$lib/logger";
 
     let isLoading = $state(true)
     let articles = $state<Article[]>([])
@@ -19,15 +20,15 @@
       try {
         articles = await FetchAllArticles()
       } catch(err) {
-        console.error(err)
+        logError(`Failed to fetch all articles: `, err)
       } finally {
         isLoading = false
       }
     }
 
     function handleEdit(id: number) {
-      OpenEditorWindow(`world/form/${id}`).catch(err => {
-        console.error("Failed to open window", err)
+      OpenEditorWindow('world', id).catch(err => {
+        logError("Failed to open window", err)
       })
     }
 
@@ -39,6 +40,12 @@
       }
     }
 
+    function openWorldReader(id: number, title: string) {
+      OpenReaderWindow('world', id, title).catch(err => {
+        logError(`Failed to open reader 'world' for ID ${id}. `, err)
+      })
+    }
+
     onMount(() => {
       fetchData()
 
@@ -47,11 +54,17 @@
 </script>
 
 {#each articles as article(article.id)}
-    <Card title={article.title} category={article.category} description={article.description} variant={article.category} onEdit={() => handleEdit(article.id)}
+    <Card
+        title={article.title}
+        category={article.category}
+        description={article.description}
+        variant={article.category}
+        onEdit={() => handleEdit(article.id)}
         onDelete={() => {
           (isModalOpen = true)
           articleRdyToDel = article.id
         }}
+        dblClickEvent={() => openWorldReader(article.id, article.title)}
     />
 {/each}
 

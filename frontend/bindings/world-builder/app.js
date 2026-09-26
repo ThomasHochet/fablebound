@@ -133,6 +133,16 @@ export function FetchAffiliation(id) {
 }
 
 /**
+ * @param {number} id
+ * @returns {$CancellablePromise<models$0.Affiliation[]>}
+ */
+export function FetchAffiliationsFaction(id) {
+    return $Call.ByID(3005683312, id).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType6($result);
+    }));
+}
+
+/**
  * @returns {$CancellablePromise<models$0.Affiliation[]>}
  */
 export function FetchAllAffiliations() {
@@ -161,11 +171,20 @@ export function FetchAllCharacters(limit) {
 }
 
 /**
+ * @returns {$CancellablePromise<services$0.LookupItem[]>}
+ */
+export function FetchAllCharactersLookup() {
+    return $Call.ByID(172663728).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType11($result);
+    }));
+}
+
+/**
  * @returns {$CancellablePromise<models$0.Faction[]>}
  */
 export function FetchAllFactions() {
     return $Call.ByID(1507432227).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType12($result);
+        return $$createType13($result);
     }));
 }
 
@@ -174,7 +193,7 @@ export function FetchAllFactions() {
  */
 export function FetchAllFactionsWithAffiliations() {
     return $Call.ByID(3549550384).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType12($result);
+        return $$createType13($result);
     }));
 }
 
@@ -183,7 +202,7 @@ export function FetchAllFactionsWithAffiliations() {
  */
 export function FetchAllLocations() {
     return $Call.ByID(1722497314).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType14($result);
+        return $$createType15($result);
     }));
 }
 
@@ -193,7 +212,7 @@ export function FetchAllLocations() {
  */
 export function FetchAllLookup(category) {
     return $Call.ByID(1192268800, category).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType15($result);
+        return $$createType11($result);
     }));
 }
 
@@ -236,11 +255,20 @@ export function FetchArticleCategories() {
 }
 
 /**
+ * @returns {$CancellablePromise<models$0.LoreCategory | null>}
+ */
+export function FetchBackstoryCategory() {
+    return $Call.ByID(2152461421).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType22($result);
+    }));
+}
+
+/**
  * @returns {$CancellablePromise<models$0.LoreCategory[]>}
  */
 export function FetchCategories() {
     return $Call.ByID(1147202407).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType22($result);
+        return $$createType23($result);
     }));
 }
 
@@ -250,7 +278,7 @@ export function FetchCategories() {
  */
 export function FetchCharacter(id) {
     return $Call.ByID(2195128362, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType23($result);
+        return $$createType24($result);
     }));
 }
 
@@ -270,7 +298,7 @@ export function FetchCharacterLore(id) {
  */
 export function FetchCharacterRelationships(id) {
     return $Call.ByID(2047072793, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType25($result);
+        return $$createType26($result);
     }));
 }
 
@@ -280,17 +308,17 @@ export function FetchCharacterRelationships(id) {
  */
 export function FetchFaction(id) {
     return $Call.ByID(26663597, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType26($result);
+        return $$createType27($result);
     }));
 }
 
 /**
  * @param {number} id
- * @returns {$CancellablePromise<models$0.Affiliation[]>}
+ * @returns {$CancellablePromise<services$0.FactionDetails | null>}
  */
 export function FetchFactionAffiliations(id) {
     return $Call.ByID(3387832742, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType6($result);
+        return $$createType29($result);
     }));
 }
 
@@ -309,7 +337,7 @@ export function FetchGeneralLore() {
  */
 export function FetchLocation(id) {
     return $Call.ByID(3420735404, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType30($result);
     }));
 }
 
@@ -348,7 +376,7 @@ export function FetchLookup(id, category) {
  */
 export function FetchLore(id) {
     return $Call.ByID(3522502387, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType28($result);
+        return $$createType31($result);
     }));
 }
 
@@ -368,7 +396,7 @@ export function FetchLoreByCategory(id) {
  */
 export function FetchRelationship(id) {
     return $Call.ByID(2543099177, id).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType29($result);
+        return $$createType32($result);
     }));
 }
 
@@ -377,7 +405,7 @@ export function FetchRelationship(id) {
  */
 export function FetchRoots() {
     return $Call.ByID(2764455836).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType14($result);
+        return $$createType15($result);
     }));
 }
 
@@ -393,12 +421,35 @@ export function FetchTrait(category, id) {
 }
 
 /**
- * Open window editor based on the section
- * @param {string} section
+ * Let's do things properly and log stuff.
+ * LogError writes an error message to a local fablebound.log file
+ * @param {string} context
+ * @param {string} errorStr
  * @returns {$CancellablePromise<void>}
  */
-export function OpenEditorWindow(section) {
-    return $Call.ByID(3821903224, section);
+export function LogError(context, errorStr) {
+    return $Call.ByID(3907359821, context, errorStr);
+}
+
+/**
+ * Open window editor based on the section
+ * @param {string} section
+ * @param {number} id
+ * @returns {$CancellablePromise<void>}
+ */
+export function OpenEditorWindow(section, id) {
+    return $Call.ByID(3821903224, section, id);
+}
+
+/**
+ * Read only
+ * @param {string} section
+ * @param {number} id
+ * @param {string} displayTitle
+ * @returns {$CancellablePromise<void>}
+ */
+export function OpenReaderWindow(section, id, displayTitle) {
+    return $Call.ByID(2888443590, section, id, displayTitle);
 }
 
 /**
@@ -427,7 +478,7 @@ export function SaveArticle(art) {
  */
 export function SaveCharacter(char) {
     return $Call.ByID(1988835663, char).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType23($result);
+        return $$createType24($result);
     }));
 }
 
@@ -437,7 +488,7 @@ export function SaveCharacter(char) {
  */
 export function SaveFaction(faction) {
     return $Call.ByID(801287184, faction).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType26($result);
+        return $$createType27($result);
     }));
 }
 
@@ -447,7 +498,7 @@ export function SaveFaction(faction) {
  */
 export function SaveLocation(location) {
     return $Call.ByID(1455493271, location).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType27($result);
+        return $$createType30($result);
     }));
 }
 
@@ -469,7 +520,7 @@ export function SaveLookup(id, label, category) {
  */
 export function SaveLore(lore) {
     return $Call.ByID(462985252, lore).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType28($result);
+        return $$createType31($result);
     }));
 }
 
@@ -480,7 +531,7 @@ export function SaveLore(lore) {
  */
 export function SaveLoreCategory(id, label) {
     return $Call.ByID(3842817276, id, label).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType30($result);
+        return $$createType22($result);
     }));
 }
 
@@ -490,7 +541,7 @@ export function SaveLoreCategory(id, label) {
  */
 export function SaveRelationships(relationship) {
     return $Call.ByID(2289153463, relationship).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType29($result);
+        return $$createType32($result);
     }));
 }
 
@@ -528,23 +579,25 @@ const $$createType7 = models$0.Article.createFrom;
 const $$createType8 = $Create.Array($$createType7);
 const $$createType9 = models$0.Character.createFrom;
 const $$createType10 = $Create.Array($$createType9);
-const $$createType11 = models$0.Faction.createFrom;
-const $$createType12 = $Create.Array($$createType11);
-const $$createType13 = models$0.Location.createFrom;
-const $$createType14 = $Create.Array($$createType13);
-const $$createType15 = $Create.Array($$createType0);
+const $$createType11 = $Create.Array($$createType0);
+const $$createType12 = models$0.Faction.createFrom;
+const $$createType13 = $Create.Array($$createType12);
+const $$createType14 = models$0.Location.createFrom;
+const $$createType15 = $Create.Array($$createType14);
 const $$createType16 = models$0.Lore.createFrom;
 const $$createType17 = $Create.Array($$createType16);
 const $$createType18 = $Create.Array($$createType2);
 const $$createType19 = $Create.Nullable($$createType7);
 const $$createType20 = $Create.Array($Create.Any);
 const $$createType21 = models$0.LoreCategory.createFrom;
-const $$createType22 = $Create.Array($$createType21);
-const $$createType23 = $Create.Nullable($$createType9);
-const $$createType24 = models$0.Relationship.createFrom;
-const $$createType25 = $Create.Array($$createType24);
-const $$createType26 = $Create.Nullable($$createType11);
-const $$createType27 = $Create.Nullable($$createType13);
-const $$createType28 = $Create.Nullable($$createType16);
-const $$createType29 = $Create.Nullable($$createType24);
-const $$createType30 = $Create.Nullable($$createType21);
+const $$createType22 = $Create.Nullable($$createType21);
+const $$createType23 = $Create.Array($$createType21);
+const $$createType24 = $Create.Nullable($$createType9);
+const $$createType25 = models$0.Relationship.createFrom;
+const $$createType26 = $Create.Array($$createType25);
+const $$createType27 = $Create.Nullable($$createType12);
+const $$createType28 = services$0.FactionDetails.createFrom;
+const $$createType29 = $Create.Nullable($$createType28);
+const $$createType30 = $Create.Nullable($$createType14);
+const $$createType31 = $Create.Nullable($$createType16);
+const $$createType32 = $Create.Nullable($$createType25);

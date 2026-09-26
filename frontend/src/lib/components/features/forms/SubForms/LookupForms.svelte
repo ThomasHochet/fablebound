@@ -7,6 +7,7 @@
   import DataTableManager from "$lib/components/ui/DataTableManager.svelte";
 
   import BroomIcon from "@iconify-svelte/game-icons/components/b/broom.svelte"
+    import { logError } from "$lib/logger";
 
   let genders = $state<LookupItem[]>([])
   let races = $state<LookupItem[]>([])
@@ -19,7 +20,7 @@
       const newItem = await CreateLookup(lookupTable, label)
       return newItem
     } catch(err) {
-      console.error(`Failed to create ${lookupTable}:`, err)
+      logError(`Failed to create ${lookupTable}:`, err)
       return null
     }
   }
@@ -29,7 +30,7 @@
       await SaveLookup(id, label, lookupTable)
       return true
     } catch(err) {
-      console.error(err)
+      logError(`Failed to update ${lookupTable}`,err)
       return null
     }
   }
@@ -38,7 +39,7 @@
     try {
       await DeleteLookup(id, lookupTable)
     } catch(err) {
-      console.error(`Failed to delete from ${lookupTable}:`, err)
+      logError(`Failed to delete from ${lookupTable}:`, err)
     }
   }
 
@@ -50,7 +51,7 @@
       alignments = await FetchAllLookup("alignment")
       status = await FetchAllLookup("status")
     } catch(err) {
-      console.error(err)
+      logError("Failed to fetch Lookups", err)
     }
   }
 

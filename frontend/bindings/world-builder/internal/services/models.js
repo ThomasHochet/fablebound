@@ -6,6 +6,63 @@
 // @ts-ignore: Unused imports
 import { Create as $Create } from "@wailsio/runtime";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
+import * as models$0 from "../models/models.js";
+
+export class FactionDetails {
+    /**
+     * Creates a new FactionDetails instance.
+     * @param {Partial<FactionDetails>} [$$source = {}] - The source object to create the FactionDetails.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["id"] = 0;
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["description"] = undefined;
+        }
+        if (!("affiliations" in $$source)) {
+            /**
+             * @member
+             * @type {models$0.Affiliation[]}
+             */
+            this["affiliations"] = [];
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new FactionDetails instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {FactionDetails}
+     */
+    static createFrom($$source = {}) {
+        const $$createField3_0 = $$createType1;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("affiliations" in $$parsedSource) {
+            $$parsedSource["affiliations"] = $$createField3_0($$parsedSource["affiliations"]);
+        }
+        return new FactionDetails(/** @type {Partial<FactionDetails>} */($$parsedSource));
+    }
+}
+
 export class LookupItem {
     /**
      * Creates a new LookupItem instance.
@@ -75,3 +132,7 @@ export class TraitItem {
         return new TraitItem(/** @type {Partial<TraitItem>} */($$parsedSource));
     }
 }
+
+// Private type creation functions
+const $$createType0 = models$0.Affiliation.createFrom;
+const $$createType1 = $Create.Array($$createType0);

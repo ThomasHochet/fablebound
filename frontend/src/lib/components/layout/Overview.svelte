@@ -19,6 +19,7 @@
     import CharacterCodex from "./Codex/CharacterCodex.svelte";
     import Modal from "../features/Modal.svelte";
     import { OpenEditorWindow } from "$wails/world-builder/app";
+    import { logError } from "$lib/logger";
 
     let selectedOverview = $state(1)
     let isLoading = $state(true)
@@ -46,15 +47,9 @@
 
     function handleForge(type: string) {
       isForgeModalOpen = false
-      if (type === 'params') {
-        OpenEditorWindow('params').catch(err => {
-          console.error(`Failed to open parameters window, `, err)
-        })
-      } else {
-        OpenEditorWindow(`${type}/form`).catch(err => {
-          console.error(`Failed to open ${type} window, `, err)
-        })
-      }
+      OpenEditorWindow(type, 0).catch(err => {
+        logError(`Failed to open ${type} window, `, err)
+      })
     }
 
     onMount(() => {

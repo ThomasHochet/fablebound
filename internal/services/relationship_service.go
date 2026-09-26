@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"fmt"
+	"world-builder/internal/logger"
 	"world-builder/internal/models"
 
 	"gorm.io/gorm"
@@ -19,10 +20,12 @@ func NewRelationshipService(db *gorm.DB) *RelationshipService {
 // Create inserts a new relationship link between two characters
 func (s *RelationshipService) Create(rel models.Relationship) (*models.Relationship, error) {
 	if rel.SourceCharID == rel.TargetCharID {
+		logger.LogError("RELATION DB:Save", fmt.Errorf("Self relationship forbidden."))
 		return nil, fmt.Errorf("a character cannot have a relationship with themselves")
 	}
 
 	if err := s.db.Create(&rel).Error; err != nil {
+		logger.LogError("RELATION DB:Save", err)
 		return nil, err
 	}
 
@@ -41,8 +44,10 @@ func (s *RelationshipService) GetByID(id int64) (*models.Relationship, error) {
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
+			logger.LogError("RELATION DB:Get", gorm.ErrRecordNotFound)
 			return nil, fmt.Errorf("relationship #%d not found", id)
 		}
+		logger.LogError("RELATION DB:Get", err)
 		return nil, err
 	}
 
@@ -59,21 +64,29 @@ func (s *RelationshipService) GetByCharacterID(characterID int64) ([]models.Rela
 		Where("source_char_id = ? OR target_char_id = ?", characterID, characterID).
 		Find(&relationships).Error
 
-	return relationships, err
+	if err != nil {
+		logger.LogError("RELATION DB:Get", err)
+		return nil, err
+	}
+
+	return relationships, nil
 }
 
 // Update saves changes to relationship type or notes
 func (s *RelationshipService) Update(rel models.Relationship) (*models.Relationship, error) {
 	if rel.ID == 0 {
+		logger.LogError("RELATION DB:Update", fmt.Errorf("Invalid ID: %d", rel.ID))
 		return nil, fmt.Errorf("cannot update relationship without a valid ID")
 	}
 
 	result := s.db.Save(&rel)
 	if result.Error != nil {
+		logger.LogError("RELATION DB:Update", result.Error)
 		return nil, result.Error
 	}
 
 	if result.RowsAffected == 0 {
+		logger.LogError("RELATION DB:Update", fmt.Errorf("ID Not Found: %d", rel.ID))
 		return nil, fmt.Errorf("relationship #%d not found", rel.ID)
 	}
 
@@ -84,10 +97,12 @@ func (s *RelationshipService) Update(rel models.Relationship) (*models.Relations
 func (s *RelationshipService) Delete(id int64) error {
 	result := s.db.Delete(&models.Relationship{}, id)
 	if result.Error != nil {
+		logger.LogError("RELATION DB:Delete", result.Error)
 		return result.Error
 	}
 
 	if result.RowsAffected == 0 {
+		logger.LogError("RELATION DB:Delete", fmt.Errorf("ID Not Found: %d", id))
 		return fmt.Errorf("relationship #%d not found", id)
 	}
 

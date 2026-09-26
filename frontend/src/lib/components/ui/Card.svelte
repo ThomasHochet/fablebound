@@ -27,14 +27,16 @@
       description = "The content has been sent to the void...",
       variant = "general",
       onEdit,
-      onDelete
+      onDelete,
+      dblClickEvent
     }: {
       title: string,
       category: string | undefined,
       description: string | undefined,
       variant?: CardVariant,
       onEdit: (() => void) | null,
-      onDelete: (() => void) | null
+      onDelete: (() => void) | null,
+      dblClickEvent: (() => void) | null,
     } = $props()
 
 
@@ -90,7 +92,7 @@
 
 </script>
 
-<div class="relative z-10 w-full max-w-2xl parchment-background-inner font-serif rounded-lg p-4 overflow-hidden select-none shadow-4xl min-h-60 max-h-60">
+<div class="relative z-10 w-full max-w-2xl parchment-background-inner font-serif rounded-lg p-4 overflow-hidden select-none shadow-4xl min-h-60 max-h-60 cursor-pointer" ondblclick={dblClickEvent}>
     <div class="absolute inset-1 border border-[#a8977d]/60 rounded-md pointer-events-none"></div>
 
     <img src="{CornerGrey}" alt="" class="absolute -top-2 -left-2 w-9 h-9 pointer-events-none z-10">

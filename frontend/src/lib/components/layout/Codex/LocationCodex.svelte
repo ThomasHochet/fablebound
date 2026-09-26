@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { DeleteLocation, FetchAllLocations, OpenEditorWindow } from "$wails/world-builder/app";
+    import { DeleteLocation, FetchAllLocations, OpenEditorWindow, OpenReaderWindow } from "$wails/world-builder/app";
     import BottomButton from "$lib/components/ui/BottomButton.svelte";
     import { onDestroy, onMount } from "svelte";
     import { Location } from "$wails/world-builder/internal/models/models";
@@ -11,6 +11,7 @@
     import QuillInk from "@iconify-svelte/game-icons/components/q/quill-ink.svelte";
     import CrossMark from "@iconify-svelte/game-icons/components/c/cross-mark.svelte";
     import Modal from "$lib/components/features/Modal.svelte";
+    import { logError } from "$lib/logger";
 
     let isLoading = $state(true)
     let locations = $state<Location[]>([])
@@ -19,9 +20,9 @@
     let readyToDeleteData = $derived(locations.find(l => (l.id === locRdyToDel)))
 
 
-    function handleEdit(id: number | undefined) {
-      OpenEditorWindow(`location/form/${id}`).catch(err => {
-        console.error("Failed to open window", err)
+    function handleEdit(id: number) {
+      OpenEditorWindow('location', id).catch(err => {
+        logError("Failed to open window", err)
       })
     }
 
@@ -33,11 +34,17 @@
       }
     }
 
+    function openLocationReader(id: number, title: string) {
+      OpenReaderWindow('location', id, title).catch(err => {
+        logError(`Failed to open 'location' ${id}`, err)
+      })
+    }
+
     async function fetchData() {
       try {
         locations = await FetchAllLocations()
       } catch(err) {
-        console.error("Failed to load locations.", err)
+        logError("Failed to load locations.", err)
       } finally {
         isLoading = false
       }
@@ -51,11 +58,17 @@
 </script>
 
 {#each locations as location(location.id)}
-    <Card title={location.name} category={location.type} description={location.description} variant={location.type} onEdit={() => handleEdit(location.id)}
+    <Card
+        title={location.name}
+        category={location.type}
+        description={location.description}
+        variant={location.type}
+        onEdit={() => handleEdit(location.id)}
         onDelete={() => {
           (isModalOpen = true)
           locRdyToDel = location.id
         }}
+        dblClickEvent={() => openLocationReader(location.id, location.name)}
     />
 {/each}
 

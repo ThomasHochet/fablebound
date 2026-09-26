@@ -4,6 +4,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "paths": {
+      "$lib": ["src/lib"],
       "$lib/*": ["./src/lib/*"],
       "$wails/*": ["./bindings/*"]
     },

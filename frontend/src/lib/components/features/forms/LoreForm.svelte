@@ -10,9 +10,12 @@
 
     import { onMount } from "svelte";
     import AnvilImpact from "@iconify-svelte/game-icons/components/a/anvil-impact.svelte";
-
+    import  SaveToast, { type SaveStatus } from "$lib/components/ui/SaveToast.svelte";
+    import { Window } from "@wailsio/runtime";
+    import { logError } from "$lib/logger";
 
     let { id } = $props()
+    let status = $state<SaveStatus>('idle')
     let isLoading = $state(true)
     let lore = $state({
       title: '',
@@ -24,20 +27,33 @@
 
     async function handleSubmit(e: Event) {
       e.preventDefault()
+      status = 'saving'
+      try {
+        if (!lore.title.trim() || !lore.categoryId) {
+          console.warn("Please select a valid category and title before saving.")
+          return;
+        }
 
-      if (!lore.title.trim() || !lore.categoryId) {
-        console.warn("Please select a valid category and title before saving.")
-        return;
+        const payload = new Lore({
+          id: id ? Number(id) : undefined,
+          title: lore.title,
+          content: lore.content,
+          category_id: lore.categoryId
+        })
+        const result = await SaveLore(payload)
+        status = 'saved'
+
+        setTimeout(() => {
+          if (status === 'saved') status = 'idle'
+        }, 3000)
+
+        setTimeout(() => {
+          Window.Close()
+        }, 1500)
+      } catch(err) {
+        logError("Failed to save Lore", err)
+        status = 'error'
       }
-
-      const payload = new Lore({
-        id: id ? Number(id) : undefined,
-        title: lore.title,
-        content: lore.content,
-        category_id: lore.categoryId
-      })
-      const result = await SaveLore(payload)
-      console.log(result)
     }
 
     async function handleCategoryCreate(newLabel: string) {
@@ -48,7 +64,7 @@
           loreCategories = [...loreCategories, {id: created?.id, label: created?.label}]
         return null
       } catch(err) {
-        console.error("Could not create a lore category.", err)
+        logError("Could not create a lore category.", err)
         return null
       }
     }
@@ -61,7 +77,7 @@
         lore.categoryName = loreData?.lore_category?.label ?? ''
         lore.categoryId = loreData?.category_id ?? 0
       } catch(err) {
-        console.error(err)
+        logError(`Failed to load Lore ID:${id}.`, err)
       } finally {
         isLoading = false
       }
@@ -71,7 +87,7 @@
       try {
         loreCategories = await FetchCategories()
       } catch(err) {
-        console.error(err)
+        logError("Failed to load Lore Categories", err)
       }
     }
 
@@ -132,4 +148,6 @@
             </div>
         </div>
     </form>
+
+    <SaveToast {status} />
 </section>

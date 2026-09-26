@@ -19,9 +19,6 @@
         reader.onloadend = async () => {
             currentPortrait = reader.result as string;
             isSaving = false;
-
-            // You can either trigger a direct Go save here,
-            // or let the parent form handle the save via formState.portrait
         };
         reader.readAsDataURL(file);
     }

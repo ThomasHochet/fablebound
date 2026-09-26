@@ -1,8 +1,9 @@
 <script lang="ts">
+    import { logError } from "$lib/logger"
     import Modal from "$lib/components/features/Modal.svelte";
     import Card from "$lib/components/ui/Card.svelte";
     import { subscribe } from "$lib/functions/subscribe";
-    import { DeleteCharacter, FetchAllCharacters, OpenEditorWindow } from "$wails/world-builder/app";
+    import { DeleteCharacter, FetchAllCharacters, OpenEditorWindow, OpenReaderWindow } from "$wails/world-builder/app";
     import { Character } from "$wails/world-builder/internal/models/models";
     import { onMount } from "svelte";
     import corners from "$lib/../assets/images/corners.png"
@@ -16,8 +17,14 @@
     let readyToDeleteData = $derived(characters.find(c => (c.id === charRdyToDel)))
 
     function handleEdit(id: number) {
-      OpenEditorWindow(`character/form/${id}`).catch(err => {
-        console.error("Failed to open window", err)
+      OpenEditorWindow('character', id).catch(err => {
+        logError("Failed to open window", err)
+      })
+    }
+
+    function handleOpen(id: number, title: string) {
+      OpenReaderWindow('character', id, title).catch(err => {
+        logError(`Failed to open reader for character ${id}:${title}`, err)
       })
     }
 
@@ -33,7 +40,7 @@
       try {
         characters = await FetchAllCharacters(100)
       } catch (err) {
-        console.error(err)
+        logError("Failed to fetch characters", err)
       } finally {
         isLoading = false
       }
@@ -56,6 +63,7 @@
           isModalOpen = true
           charRdyToDel = character.id
         }}
+        dblClickEvent={() => handleOpen(character.id, character.firstname + " " + character.surname)}
     />
 {/each}
 

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"world-builder/internal/logger"
 	"world-builder/internal/models"
 	"world-builder/internal/services"
 
@@ -47,17 +48,48 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 }
 
 // Open window editor based on the section
-func (a *App) OpenEditorWindow(section string) {
+func (a *App) OpenEditorWindow(section string, id int64) {
+	if a.wailsApp == nil {
+		a.wailsApp = application.Get()
+	}
+
+	// new router thingy, need to update
+	// #/editor/:section I think
+	urlPath := fmt.Sprintf("#/editor/%s", section)
+	windowTitle := fmt.Sprintf("Fablebound - Edit %s", section)
+
+	// Editing so, #/editor/:section/:id
+	if id > 0 {
+		urlPath = fmt.Sprintf("#/editor/%s/%d", section, id)
+		windowTitle = fmt.Sprintf("Fablebound - Edit %s #%d", section, id)
+	}
+
+	a.wailsApp.Window.NewWithOptions(application.WebviewWindowOptions{
+		Title:  windowTitle,
+		Width:  1920,
+		Height: 1080,
+		URL:    urlPath,
+	})
+}
+
+// Read only
+func (a *App) OpenReaderWindow(section string, id int64, displayTitle string) {
 	if a.wailsApp == nil {
 		a.wailsApp = application.Get()
 	}
 
 	a.wailsApp.Window.NewWithOptions(application.WebviewWindowOptions{
-		Title:  fmt.Sprintf("World Builder - %s Editor", section),
+		Title:  fmt.Sprintf("Fablebound - %s", displayTitle),
 		Width:  1920,
 		Height: 1080,
-		URL:    fmt.Sprintf("#/editor/%s", section),
+		URL:    fmt.Sprintf("#/reader/%s/%d", section, id),
 	})
+}
+
+// Let's do things properly and log stuff.
+// LogError writes an error message to a local fablebound.log file
+func (a *App) LogError(context string, errorStr string) {
+	logger.Log("ERROR", context, errorStr)
 }
 
 // Articles
@@ -106,6 +138,10 @@ func (a *App) FetchAllCharacters(limit int) ([]models.Character, error) {
 	return a.characterService.GetAllCharacters(limit)
 }
 
+func (a *App) FetchAllCharactersLookup() ([]services.LookupItem, error) {
+	return a.characterService.GetAllCharacterAsLookup()
+}
+
 func (a *App) DeleteCharacter(id int64) error {
 	return a.characterService.Delete(id)
 }
@@ -121,6 +157,10 @@ func (a *App) SaveFaction(faction models.Faction) (*models.Faction, error) {
 
 func (a *App) FetchFaction(id int64) (*models.Faction, error) {
 	return a.factionService.GetFaction(id)
+}
+
+func (a *App) FetchFactionAffiliations(id int64) (*services.FactionDetails, error) {
+	return a.factionService.GetFactionAffiliations(id)
 }
 
 func (a *App) FetchAllFactions() ([]models.Faction, error) {
@@ -148,8 +188,8 @@ func (a *App) FetchAffiliation(id int64) (*models.Affiliation, error) {
 	return a.factionService.GetAffiliation(id)
 }
 
-func (a *App) FetchFactionAffiliations(id int64) ([]models.Affiliation, error) {
-	return a.factionService.GetFactionAffiliations(id)
+func (a *App) FetchAffiliationsFaction(id int64) ([]models.Affiliation, error) {
+	return a.factionService.GetAffiliationsFaction(id)
 }
 
 func (a *App) FetchAllAffiliations() ([]models.Affiliation, error) {
@@ -222,6 +262,7 @@ func (a *App) SaveLore(lore models.Lore) (*models.Lore, error) {
 		if lore.CategoryID == 0 && lore.LoreCategory != nil && lore.LoreCategory.Label != "" {
 			newCategory, err := a.loreService.CreateCategory(lore.LoreCategory.Label)
 			if err != nil {
+				logger.LogError("DB:Save", err)
 				return nil, err
 			}
 			lore.CategoryID = newCategory.ID
@@ -267,6 +308,10 @@ func (a *App) SaveLoreCategory(id int64, label string) (*models.LoreCategory, er
 
 func (a *App) FetchCategories() ([]models.LoreCategory, error) {
 	return a.loreService.GetAllCategories()
+}
+
+func (a *App) FetchBackstoryCategory() (*models.LoreCategory, error) {
+	return a.loreService.GetBackstoryLoreCategory()
 }
 
 func (a *App) DeleteLoreCategory(id int64) error {

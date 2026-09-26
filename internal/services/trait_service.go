@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"reflect"
+	"world-builder/internal/logger"
 	"world-builder/internal/models"
 
 	"gorm.io/gorm"
@@ -34,6 +35,7 @@ func (s *TraitService) getModel(category string) (interface{}, error) {
 	case "fear":
 		return &models.Fear{}, nil
 	default:
+		logger.LogError("TRAIT MODEL", fmt.Errorf("Invalid category %s", category))
 		return nil, fmt.Errorf("Invalid trait category: %s", category)
 	}
 }
@@ -48,6 +50,7 @@ func (s *TraitService) Create(category, label string) (*TraitItem, error) {
 	val.FieldByName("Label").SetString(label)
 
 	if err = s.db.Create(model).Error; err != nil {
+		logger.LogError("TRAIT DB:Save", err)
 		return nil, err
 	}
 
@@ -67,6 +70,7 @@ func (s *TraitService) Fetch(category string, id int64) (*TraitItem, error) {
 
 	var item TraitItem
 	if err = s.db.Model(model).First(&item, id).Error; err != nil {
+		logger.LogError("TRAIT DB:Get", err)
 		return nil, err
 	}
 
@@ -82,7 +86,12 @@ func (s *TraitService) FetchAll(category string) ([]TraitItem, error) {
 	var results []TraitItem
 	err = s.db.Model(model).Order("label ASC").Find(&results).Error
 
-	return results, err
+	if err != nil {
+		logger.LogError("TRAIT DB:Get", err)
+		return nil, err
+	}
+
+	return results, nil
 }
 
 func (s *TraitService) Update(id int64, label, category string) (*TraitItem, error) {
@@ -93,10 +102,12 @@ func (s *TraitService) Update(id int64, label, category string) (*TraitItem, err
 
 	result := s.db.Model(model).Where("id = ?", id).Update("label", label)
 	if result.Error != nil {
+		logger.LogError("TRAIT DB:Update", result.Error)
 		return nil, result.Error
 	}
 
 	if result.RowsAffected == 0 {
+		logger.LogError("TRAIT DB:Update", fmt.Errorf("No rows affected for id %d in category %s", id, category))
 		return nil, fmt.Errorf("No rows affected for id %d in category %s", id, category)
 	}
 
@@ -109,5 +120,11 @@ func (s *TraitService) Delete(category string, id int64) error {
 	if err != nil {
 		return err
 	}
-	return s.db.Model(model).Where("id = ?", id).Delete(model).Error
+
+	err = s.db.Model(model).Where("id = ?", id).Delete(model).Error
+	if err != nil {
+		logger.LogError("TRAIT DB:Delete", err)
+		return err
+	}
+	return nil
 }
