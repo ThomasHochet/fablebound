@@ -289,6 +289,343 @@
     .tool-divider {
         @apply h-5 w-[1px] bg-[#4a2e16] mx-1 z-50;
     }
+
+    /* ==========================================================================
+        FANTASY MASKED CORNERS
+        ========================================================================== */
+
+    .corners {
+        min-height: 75px;
+        padding: 1.5rem;
+        position: relative;
+        background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
+        color: var(--ink-color);
+        box-shadow: inset 0 0 15px rgba(115, 91, 65, 0.3);
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55));
+    }
+
+    /* 1. Parchment Scroll Cutout */
+    .corners--parchment {
+        -webkit-mask-image: radial-gradient(circle at 1.25rem 1.25rem, transparent 1.25rem, #000 0);
+        mask-image: radial-gradient(circle at 1.25rem 1.25rem, transparent 1.25rem, #000 0);
+        -webkit-mask-position: -1.25rem -1.25rem;
+        mask-position: -1.25rem -1.25rem;
+        -webkit-mask-repeat: repeat;
+        mask-repeat: repeat;
+    }
+
+    /* 2. Arcane Chamfer Cutout */
+    .corners--chamfer {
+        -webkit-mask-image:
+            linear-gradient(135deg, transparent 1rem, #000 0),
+            linear-gradient(-135deg, transparent 1rem, #000 0),
+            linear-gradient(45deg, transparent 1rem, #000 0),
+            linear-gradient(-45deg, transparent 1rem, #000 0);
+        mask-image:
+            linear-gradient(135deg, transparent 1rem, #000 0),
+            linear-gradient(-135deg, transparent 1rem, #000 0),
+            linear-gradient(45deg, transparent 1rem, #000 0),
+            linear-gradient(-45deg, transparent 1rem, #000 0);
+        -webkit-mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 51% 51%;
+        mask-size: 51% 51%;
+    }
+
+    /* 3. Sunburst Crest Cutout */
+    .corners--crested {
+        --step: calc(30% / 8.25);
+        -webkit-mask-image:
+            conic-gradient(from -90deg at 1.25rem 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 0deg at calc(100% - 1.25rem) 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 180deg at 1.25rem calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 90deg at calc(100% - 1.25rem) calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0);
+        mask-image:
+            conic-gradient(from -90deg at 1.25rem 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 0deg at calc(100% - 1.25rem) 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 180deg at 1.25rem calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 90deg at calc(100% - 1.25rem) calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0);
+        -webkit-mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 51% 51%;
+        mask-size: 51% 51%;
+    }
+
+    /* 4. Rune Trim Cutout */
+    .corners--rune-trim {
+        -webkit-mask-image:
+            radial-gradient(circle at 1.25rem 1.25rem, transparent 0, transparent 0.6rem, #000 0, #000 0.85rem, transparent 0, transparent 1.1rem, #000 0);
+        mask-image:
+            radial-gradient(circle at 1.25rem 1.25rem, transparent 0, transparent 0.6rem, #000 0, #000 0.85rem, transparent 0, transparent 1.1rem, #000 0);
+        -webkit-mask-position: -1.25rem -1.25rem;
+        mask-position: -1.25rem -1.25rem;
+        -webkit-mask-repeat: repeat;
+        mask-repeat: repeat;
+    }
+
+
+    /* ==========================================================================
+        BORDERED VARIANTS (WITH TRACED BORDER & DROP SHADOW)
+        ========================================================================== */
+
+    /* Shared setup for masked bordered variants */
+    .corners--crested-bordered,
+    .corners--rune-trim-bordered {
+        min-height: 75px;
+        padding: 1.5rem;
+        position: relative;
+        background-color: var(--frame-border-color);
+        color: var(--ink-color);
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55));
+    }
+
+    .corners--crested-bordered::before,
+    .corners--rune-trim-bordered::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
+        box-shadow: inset 0 0 15px rgba(115, 91, 65, 0.3);
+        z-index: 0;
+    }
+
+    .corners--parchment-bordered > *,
+    .corners--crested-bordered > *,
+    .corners--rune-trim-bordered > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 1. Parchment Scroll Bordered */
+    .corners--parchment-bordered {
+        min-height: 75px;
+        padding: 1.5rem;
+        position: relative;
+        /* Ensure variable matches your theme definition */
+        /*background-color: var(--frame-border-color, var(--frame-border, #4a3b2c));*/
+        color: var(--ink-color);
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55));
+
+        /* Apply mask to the outer boundary */
+        -webkit-mask-image: radial-gradient(circle at 1.25rem 1.25rem, transparent 1.25rem, #000 0);
+        mask-image: radial-gradient(circle at 1.25rem 1.25rem, transparent 1.25rem, #000 0);
+        -webkit-mask-position: -1.25rem -1.25rem;
+        mask-position: -1.25rem -1.25rem;
+        -webkit-mask-repeat: repeat;
+        mask-repeat: repeat;
+    }
+
+    .corners--parchment-bordered::before {
+        content: "";
+        position: absolute;
+        /* Inset by 2px to expose the parent's dark background as a border frame */
+        inset: 2px;
+        /*background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);*/
+        box-shadow: inset 0 0 15px rgba(115, 91, 65, 0.3);
+        z-index: 0;
+
+        /* Inherit or match corner cutouts for smooth inner alignment */
+        border-radius: inherit;
+    }
+
+
+    /* 2. Arcane Chamfer Bordered (Clip-Path Polygon) */
+    .corners--chamfer-bordered {
+        min-height: 75px;
+        padding: 1.5rem;
+        position: relative;
+        background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
+        color: var(--ink-color);
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55));
+        clip-path: polygon(
+            1rem 0, calc(100% - 1rem) 0,
+            100% 1rem, 100% calc(100% - 1rem),
+            calc(100% - 1rem) 100%, 1rem 100%,
+            0 calc(100% - 1rem), 0 1rem
+        );
+    }
+
+    .corners--chamfer-bordered::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--frame-border-color);
+        pointer-events: none;
+        clip-path: inherit;
+        box-shadow: inset 0 0 15px rgba(115, 91, 65, 0.3);
+    }
+
+    /* 3. Sunburst Crest Bordered */
+    .corners--crested-bordered {
+        --step: calc(30% / 8.25);
+        -webkit-mask-image:
+            conic-gradient(from -90deg at 1.25rem 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 0deg at calc(100% - 1.25rem) 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 180deg at 1.25rem calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 90deg at calc(100% - 1.25rem) calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0);
+        mask-image:
+            conic-gradient(from -90deg at 1.25rem 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 0deg at calc(100% - 1.25rem) 1.25rem, transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 180deg at 1.25rem calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0),
+            conic-gradient(from 90deg at calc(100% - 1.25rem) calc(100% - 1.25rem), transparent var(--step), #000 0, #000 calc(var(--step) * 2), transparent 0, transparent calc(var(--step) * 3), #000 0, #000 calc(var(--step) * 4), transparent 0, transparent calc(var(--step) * 5), #000 0, #000 calc(var(--step) * 6), transparent 0, transparent calc(var(--step) * 7), #000 0);
+        -webkit-mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: 51% 51%;
+        mask-size: 51% 51%;
+    }
+
+    /* 4. Rune Trim Bordered */
+    .corners--rune-trim-bordered {
+        -webkit-mask-image:
+            radial-gradient(circle at 1.25rem 1.25rem, transparent 0, transparent 0.6rem, #000 0, #000 0.85rem, transparent 0, transparent 1.1rem, #000 0);
+        mask-image:
+            radial-gradient(circle at 1.25rem 1.25rem, transparent 0, transparent 0.6rem, #000 0, #000 0.85rem, transparent 0, transparent 1.1rem, #000 0);
+        -webkit-mask-position: -1.25rem -1.25rem;
+        mask-position: -1.25rem -1.25rem;
+        -webkit-mask-repeat: repeat;
+        mask-repeat: repeat;
+    }
+
+    .corners--dragon-tooth {
+      clip-path: polygon(
+        /* Top Left Tooth */
+        0 1.5rem, 0.5rem 1rem, 0.5rem 0.5rem, 1.5rem 0,
+        /* Top Right Tooth */
+        calc(100% - 1.5rem) 0, calc(100% - 0.5rem) 0.5rem, calc(100% - 0.5rem) 1rem, 100% 1.5rem,
+        /* Bottom Right Tooth */
+        100% calc(100% - 1.5rem), calc(100% - 0.5rem) calc(100% - 1rem), calc(100% - 0.5rem) calc(100% - 0.5rem), calc(100% - 1.5rem) 100%,
+        /* Bottom Left Tooth */
+        1.5rem 100%, 0.5rem calc(100% - 0.5rem), 0.5rem calc(100% - 1rem), 0 calc(100% - 1.5rem)
+      );
+    }
+
+    .corners--dragon-tooth::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--frame-border);
+      pointer-events: none;
+      clip-path: inherit;
+    }
+
+    /* Container holds the outer border color */
+    .corners--dragon-tooth-bordered {
+      position: relative;
+      min-height: 120px;
+      padding: 1.75rem;
+      background: var(--frame-border); /* Border color */
+
+      /* Outer Polygon Clip */
+      clip-path: polygon(
+        0 1.5rem, 0.5rem 1rem, 0.5rem 0.5rem, 1.5rem 0,
+        calc(100% - 1.5rem) 0, calc(100% - 0.5rem) 0.5rem, calc(100% - 0.5rem) 1rem, 100% 1.5rem,
+        100% calc(100% - 1.5rem), calc(100% - 0.5rem) calc(100% - 1rem), calc(100% - 0.5rem) calc(100% - 0.5rem), calc(100% - 1.5rem) 100%,
+        1.5rem 100%, 0.5rem calc(100% - 0.5rem), 0.5rem calc(100% - 1rem), 0 calc(100% - 1.5rem)
+      );
+    }
+
+    /* Inner Parchment Layer (Inset by 1.5px/2px for the border line) */
+    .corners--dragon-tooth-bordered::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
+      box-shadow: inset 0 0 18px rgba(115, 91, 65, 0.5);
+      z-index: 0;
+
+      /* Scale/offset inner polygon by ~1.5px to expose the border behind it */
+      clip-path: polygon(
+        1.5px calc(1.5rem + 1px), calc(0.5rem + 1px) calc(1rem + 0.5px), calc(0.5rem + 1px) calc(0.5rem + 1px), calc(1.5rem + 0.5px) 1.5px,
+        calc(100% - 1.5rem - 0.5px) 1.5px, calc(100% - 0.5rem - 1px) calc(0.5rem + 1px), calc(100% - 0.5rem - 1px) calc(1rem + 0.5px), calc(100% - 1.5px) calc(1.5rem + 1px),
+        calc(100% - 1.5px) calc(100% - 1.5rem - 1px), calc(100% - 0.5rem - 1px) calc(100% - 1rem - 0.5px), calc(100% - 0.5rem - 1px) calc(100% - 0.5rem - 1px), calc(100% - 1.5rem - 0.5px) calc(100% - 1.5px),
+        calc(1.5rem + 0.5px) calc(100% - 1.5px), calc(0.5rem + 1px) calc(100% - 0.5rem - 1px), calc(0.5rem + 1px) calc(100% - 1rem - 0.5px), 1.5px calc(100% - 1.5rem - 1px)
+      );
+    }
+
+    /* Keep card content above the pseudo-element background */
+    .corners--dragon-tooth-bordered > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .corners--dwarven {
+      clip-path: polygon(
+        0 1.25rem, 0.75rem 1.25rem, 0.75rem 0,
+        calc(100% - 0.75rem) 0, calc(100% - 0.75rem) 1.25rem, 100% 1.25rem,
+        100% calc(100% - 1.25rem), calc(100% - 0.75rem) calc(100% - 1.25rem), calc(100% - 0.75rem) 100%,
+        0.75rem 100%, 0.75rem calc(100% - 1.25rem), 0 calc(100% - 1.25rem)
+      );
+    }
+
+    .corners--dwarven::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--frame-border);
+      pointer-events: none;
+      clip-path: inherit;
+    }
+
+    /* Container holds the outer border color */
+    .corners--dwarven-bordered {
+      position: relative;
+      min-height: 120px;
+      padding: 1.75rem;
+      background: var(--frame-border); /* Border color */
+
+      /* Outer Polygon Clip */
+      clip-path: polygon(
+        0 1.25rem, 0.75rem 1.25rem, 0.75rem 0,
+        calc(100% - 0.75rem) 0, calc(100% - 0.75rem) 1.25rem, 100% 1.25rem,
+        100% calc(100% - 1.25rem), calc(100% - 0.75rem) calc(100% - 1.25rem), calc(100% - 0.75rem) 100%,
+        0.75rem 100%, 0.75rem calc(100% - 1.25rem), 0 calc(100% - 1.25rem)
+      );
+    }
+
+    /* Inner Parchment Layer (Inset by 1.5px to expose outer border) */
+    .corners--dwarven-bordered::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-base) 50%, var(--parchment-dark) 100%);
+      box-shadow: inset 0 0 18px rgba(115, 91, 65, 0.5);
+      z-index: 0;
+
+      /* Offset inner polygon steps by 1.5px */
+      clip-path: polygon(
+        1.5px calc(1.25rem + 1.5px), calc(0.75rem - 1.5px) calc(1.25rem + 1.5px), calc(0.75rem + 1.5px) 1.5px,
+        calc(100% - 0.75rem - 1.5px) 1.5px, calc(100% - 0.75rem + 1.5px) calc(1.25rem + 1.5px), calc(100% - 1.5px) calc(1.25rem + 1.5px),
+        calc(100% - 1.5px) calc(100% - 1.25rem - 1.5px), calc(100% - 0.75rem + 1.5px) calc(100% - 1.25rem - 1.5px), calc(100% - 0.75rem - 1.5px) calc(100% - 1.5px),
+        calc(0.75rem + 1.5px) calc(100% - 1.5px), calc(0.75rem - 1.5px) calc(100% - 1.25rem - 1.5px), 1.5px calc(100% - 1.25rem - 1.5px)
+      );
+    }
+
+    /* Keep card content above the pseudo-element background */
+    .corners--dwarven-bordered > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .shadow-wrapper {
+        @apply w-full inline-block drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]
+        /*filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.8));
+        display: inline-block;
+        width: 100%;*/
+    }
+
+    .shadow-wrapper-less {
+        @apply drop-shadow-[0_10px_15px_rgba(0,0,0,0.3)]
+    }
+
+    .light-wood-border {
+        @apply border border-solid border-(--wood-light)
+    }
 }
 
 .bg {

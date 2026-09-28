@@ -303,7 +303,7 @@
 
                     <div class="grid grid-rows-[auto-auto]">
                         <label for="title" class="forge-input-label">
-                            Goals
+                            Personality & Goals
                         </label>
                         <div class="border border-[#8b7355]/40 rounded-xl">
                             <RichEditor bind:value={formState.goals} />
