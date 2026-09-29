@@ -5,6 +5,7 @@
     import { logError } from "$lib/logger";
     import { FetchAffiliation } from "$wails/world-builder/app";
     import { Affiliation } from "$wails/world-builder/internal/models/models";
+    import Mountain from "$lib/../assets/images/moutain_bg.png"
 
     let { id } = $props()
     let affiliation = $state<Affiliation | null>(null)
@@ -49,6 +50,7 @@
 
             <RichEditor disabled={true} value={affiliation.description} classes="text-left! py-2" />
             </div>
+            <img src={Mountain} alt="" class="opacity-20 absolute bottom-0 right-20 mb-2 mr-2 z-21" />
         </div>
 </article>
 {:else}

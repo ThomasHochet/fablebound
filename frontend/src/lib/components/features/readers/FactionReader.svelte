@@ -5,6 +5,7 @@
     import { logError } from "$lib/logger";
     import { FetchFaction } from "$wails/world-builder/app";
     import { Faction } from "$wails/world-builder/internal/models/models";
+    import Mountain from "$lib/../assets/images/moutain_bg.png"
 
     let { id } = $props()
     let faction = $state<Faction | null>(null)
@@ -43,8 +44,10 @@
 
             <RichEditor disabled={true} value={faction.description} classes="text-left! py-2" />
             </div>
+            <img src={Mountain} alt="" class="opacity-20 absolute bottom-0 right-20 mb-2 mr-2 z-21" />
         </div>
-</article>
+
+    </article>
 {:else}
     <p>Loading Faction article</p>
 {/if}

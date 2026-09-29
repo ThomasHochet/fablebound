@@ -7,6 +7,7 @@
     import { Character } from "$wails/world-builder/internal/models/models";
     import Bio from "./character/Bio.svelte";
     import CharacterMain from "./character/CharacterMain.svelte";
+    import Compass from "$lib/../assets/images/compass_bg.png"
 
     let { id } = $props()
     let character = $state<Character | null>(null)
@@ -54,11 +55,13 @@
 
                 <div class="parchment-background relative w-full h-auto grid grid-rows-[auto_1fr] z-10 border border-[#3b2a1e]">
                     <div class="absolute inset-2 border border-[#8b7355]/40 pointer-events-none z-0"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6 p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-[260px_auto_1fr] gap-6 p-4">
                         <Bio character={character} fullname={fullname} />
+                        <div class="mt-2 border-l border-[#8b7355]/40 pointer-events-none z-0 w-4/5"></div>
                         <CharacterMain {character} />
                     </div>
                 </div>
+                <img src={Compass} alt="" class="opacity-20 absolute right-5 z-11 w-50 rotate-40" />
             </div>
         </div>
 </article>

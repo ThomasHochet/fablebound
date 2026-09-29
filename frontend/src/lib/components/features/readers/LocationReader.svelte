@@ -5,6 +5,7 @@
     import { logError } from "$lib/logger";
     import { FetchLocation } from "$wails/world-builder/app";
     import { Location } from "$wails/world-builder/internal/models/models";
+    import Town from "$lib/../assets/images/castle-town.png"
 
     let { id } = $props()
     let location = $state<Location | null>(null)
@@ -37,7 +38,7 @@
         <div class="relative z-20 -mb-10 pointer-events-none">
             <ParchmentTitle title={location.name} subtitle={subtitle} />
         </div>
-        <div class="relative w-full h-full shadow-2xl rounded-sm border-4 border-[#1a0f0f] bg-[#2b190c] p-1 md:p-1 grid grid-cols-1 grid-rows-1 min-h-56 max-w-7/8">
+        <div class="relative w-full h-full shadow-2xl rounded-sm border-4 border-[#1a0f0f] bg-[#2b190c] p-1 md:p-1 grid grid-cols-1 grid-rows-1 min-h-86 max-w-7/8">
             <div class="wood-texture-bg"></div>
 
             <img src="{corners}" alt="" class="absolute -top-4 -left-4 w-15 h-15 pointer-events-none z-10">
@@ -50,6 +51,7 @@
 
                 <RichEditor disabled={true} value={location.description} classes="text-left! py-2" />
             </div>
+            <img src={Town} alt="" class="opacity-20 absolute bottom-0 right-20 mb-2 mr-2 z-21 mt-10" />
         </div>
 </article>
 {:else}
