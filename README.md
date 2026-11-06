@@ -2,20 +2,33 @@
 
 ## About
 
-This is the official Wails Svelte template.
+Fablebound is a small personal app made with the intent to help making TTRPG/Story driven character, stories and places.
+It is a small application made using [Wails](https://v3.wails.io/), a cross-platform framework using Golang backend and anything you want for the front.
 
-## Live Development
+![Character Reader (first half)](image.png)
+![Character Creator (first part)](image_1.png)
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## What is used?
+- Wails:
+  - Golang with SQLite
+  - Svelte + Tailwind + Homemade CSS
+- Basic MVC + CRUD
+- A WYSIWYG text editor with TipTap
 
-## Building
+## What's missing?
+- A kanban or project overview (didn't make one 🧐)
+- CI/CD
 
-To build a redistributable, production mode package, use `wails build`.
+## Next to do
+-[ ] CI/CD with github actions
+-[ ] Unit tests for CI/CD
+-[ ] Improve performance (Wails v3 issue maybe?)
+-[ ] Add external SQL connection + security.
+-[ ] And much more.
 
-## To-do list
-- [ ] Pagination on GetAll methods.
-- [ ] Views
-- [ ]
+## What's done
+-[x] Basic CRUD with GORM
+-[x] MVC (Not perfect, but it's working and enjoyable I think?)
+-[x] Views and General Overviews
+-[x] WYSIWYG Text Editor - Acting as a reader too.
+-[x] Router (Homemade with regex because the external modules were not working)
