@@ -20,15 +20,15 @@ It is a small application made using [Wails](https://v3.wails.io/), a cross-plat
 - CI/CD
 
 ## Next to do
--[ ] CI/CD with github actions
--[ ] Unit tests for CI/CD
--[ ] Improve performance (Wails v3 issue maybe?)
--[ ] Add external SQL connection + security.
--[ ] And much more.
+- [ ] CI/CD with github actions
+- [ ] Unit tests for CI/CD
+- [ ] Improve performance (Wails v3 issue maybe?)
+- [ ] Add external SQL connection + security.
+- [ ] And much more.
 
 ## What's done
--[x] Basic CRUD with GORM
--[x] MVC (Not perfect, but it's working and enjoyable I think?)
--[x] Views and General Overviews
--[x] WYSIWYG Text Editor - Acting as a reader too.
--[x] Router (Homemade with regex because the external modules were not working)
+- [x] Basic CRUD with GORM
+- [x] MVC (Not perfect, but it's working and enjoyable I think?)
+- [x] Views and General Overviews
+- [x] WYSIWYG Text Editor - Acting as a reader too.
+- [x] Router (Homemade with regex because the external modules were not working)
