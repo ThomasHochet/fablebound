@@ -102,7 +102,8 @@ func (s *FactionService) UpdateFaction(faction models.Faction) (*models.Faction,
 		return nil, fmt.Errorf("Cannot update faction without a valid ID.")
 	}
 
-	result := s.db.Save(&faction)
+	result := s.db.Model(&models.Faction{}).Where("id = ?", faction.ID).Updates(&faction)
+	// result := s.db.Save(&faction)
 	if result.Error != nil {
 		logger.LogError("FACTION DB:Update", result.Error)
 		return nil, result.Error
@@ -189,7 +190,8 @@ func (s *FactionService) UpdateAffiliation(affiliation models.Affiliation) (*mod
 		return nil, fmt.Errorf("Cannot update affiliation without a valid ID.")
 	}
 
-	result := s.db.Save(&affiliation)
+	result := s.db.Model(&models.Affiliation{}).Where("id = ?", affiliation.ID).Updates(&affiliation)
+	// result := s.db.Save(&affiliation)
 	if result.Error != nil {
 		logger.LogError("AFFILIATION DB:Update", result.Error)
 		return nil, result.Error

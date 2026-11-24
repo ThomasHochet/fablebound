@@ -135,7 +135,7 @@ func (s *LocationService) Update(location models.Location) (*models.Location, er
 		return nil, fmt.Errorf("a location cannot be its own parent")
 	}
 
-	result := s.db.Save(&location)
+	result := s.db.Model(&models.Location{}).Where("id = ?", location.ID).Updates(&location)
 	if result.Error != nil {
 		logger.LogError("LOCATION DB:Update", result.Error)
 		return nil, result.Error

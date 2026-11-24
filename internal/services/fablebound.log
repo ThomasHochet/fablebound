@@ -1,0 +1,137 @@
+[16 Nov 26 13:16 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 10:39 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 10:39 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 10:43 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 10:46 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 10:57 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:00 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:00 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[19 Nov 26 11:01 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:01 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[19 Nov 26 11:09 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:09 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[19 Nov 26 11:10 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:10 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[19 Nov 26 11:10 CET] ERROR (ARTICLE DB:Get): record not found
+[19 Nov 26 11:54 CET] ERROR (Article:Validate): Article title cannot be empty.
+[19 Nov 26 11:54 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[19 Nov 26 11:54 CET] ERROR (ARTICLE DB:Get): record not found
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Get): record not found
+[24 Nov 26 09:49 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Save): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Get): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Get): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Update): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (LOOKUP DB:Delete): Invalid category: unknown
+[24 Nov 26 09:49 CET] ERROR (TRAIT DB:Update): No rows affected for id 9999 in category strength
+[24 Nov 26 09:49 CET] ERROR (TRAIT DB:Get): record not found
+[24 Nov 26 09:49 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 09:49 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 09:49 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 09:49 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 09:49 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Save): Location cannot be it's own parent.
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Update): Invalid ID: 0
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Update): a location cannot be its own parent
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 09:52 CET] ERROR (LOCATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Save): Location cannot be it's own parent.
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Update): Invalid ID: 0
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Update): a location cannot be its own parent
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Update): ID Not Found: 9999
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 10:08 CET] ERROR (LOCATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:11 CET] ERROR (RELATION DB:Save): Self relationship forbidden.
+[24 Nov 26 10:11 CET] ERROR (RELATION DB:Get): record not found
+[24 Nov 26 10:11 CET] ERROR (RELATION DB:Update): Invalid ID: 0
+[24 Nov 26 10:11 CET] ERROR (RELATION DB:Get): record not found
+[24 Nov 26 10:11 CET] ERROR (RELATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:12 CET] ERROR (LORE Cat DB:Update): Invalid ID: 0
+[24 Nov 26 10:12 CET] ERROR (LORE Cat DB:Update): Empty Label
+[24 Nov 26 10:12 CET] ERROR (LORE Cat DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:12 CET] ERROR (LORE DB:Save): Invalid ID: 0
+[24 Nov 26 10:12 CET] ERROR (LORE DB:Get): record not found
+[24 Nov 26 10:12 CET] ERROR (LORE DB:Update): Invalid ID: 0
+[24 Nov 26 10:12 CET] ERROR (LORE DB:Get): record not found
+[24 Nov 26 10:12 CET] ERROR (LORE DB:Delete): lore entry #9999 not found
+[24 Nov 26 10:17 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:17 CET] ERROR (FACTION DB:Update): Cannot update faction without a valid ID: 0
+[24 Nov 26 10:17 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:17 CET] ERROR (FACTION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:17 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:17 CET] ERROR (AFFILIATION DB:Update): Cannot update affiliation without a valid ID: 0
+[24 Nov 26 10:17 CET] ERROR (AFFILIATION DB:Get): record not found
+[24 Nov 26 10:17 CET] ERROR (AFFILIATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:19 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:19 CET] ERROR (FACTION DB:Update): Cannot update faction without a valid ID: 0
+[24 Nov 26 10:19 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:19 CET] ERROR (FACTION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:19 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:19 CET] ERROR (AFFILIATION DB:Update): Cannot update affiliation without a valid ID: 0
+[24 Nov 26 10:19 CET] ERROR (AFFILIATION DB:Get): record not found
+[24 Nov 26 10:19 CET] ERROR (AFFILIATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:22 CET] ERROR (CHARACTER DB:Get): record not found
+[24 Nov 26 10:22 CET] ERROR (CHARACTER DB:Update): Invalid ID: 0
+[24 Nov 26 10:22 CET] ERROR (CHARACTER DB:Delete): Invalid ID: 0
+[24 Nov 26 10:22 CET] ERROR (CHARACTER DB:Get): record not found
+[24 Nov 26 10:22 CET] ERROR (CHARACTER DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (Article:Validate): Article title cannot be empty.
+[24 Nov 26 10:24 CET] ERROR (ARTICLE DB:Delete): #999 not found
+[24 Nov 26 10:24 CET] ERROR (ARTICLE DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (CHARACTER DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (CHARACTER DB:Update): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (CHARACTER DB:Delete): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (CHARACTER DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (CHARACTER DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (FACTION DB:Update): Cannot update faction without a valid ID: 0
+[24 Nov 26 10:24 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (FACTION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (FACTION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (AFFILIATION DB:Update): Cannot update affiliation without a valid ID: 0
+[24 Nov 26 10:24 CET] ERROR (AFFILIATION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (AFFILIATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Save): Location cannot be it's own parent.
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Update): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Update): a location cannot be its own parent
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Update): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (LOCATION DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Save): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Get): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Get): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Update): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP Model): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (LOOKUP DB:Delete): Invalid category: unknown
+[24 Nov 26 10:24 CET] ERROR (TRAIT DB:Update): No rows affected for id 9999 in category strength
+[24 Nov 26 10:24 CET] ERROR (TRAIT DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 10:24 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 10:24 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 10:24 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 10:24 CET] ERROR (TRAIT MODEL): Invalid category unknown
+[24 Nov 26 10:24 CET] ERROR (LORE Cat DB:Update): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (LORE Cat DB:Update): Empty Label
+[24 Nov 26 10:24 CET] ERROR (LORE Cat DB:Delete): ID Not Found: 9999
+[24 Nov 26 10:24 CET] ERROR (LORE DB:Save): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (LORE DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (LORE DB:Update): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (LORE DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (LORE DB:Delete): lore entry #9999 not found
+[24 Nov 26 10:24 CET] ERROR (RELATION DB:Save): Self relationship forbidden.
+[24 Nov 26 10:24 CET] ERROR (RELATION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (RELATION DB:Update): Invalid ID: 0
+[24 Nov 26 10:24 CET] ERROR (RELATION DB:Get): record not found
+[24 Nov 26 10:24 CET] ERROR (RELATION DB:Delete): ID Not Found: 9999

@@ -79,9 +79,9 @@ func (s *ArticleService) Update(article models.Article) (*models.Article, error)
 		return nil, fmt.Errorf("Cannot update character with an invalid ID")
 	}
 
-	// if err := article.Validate(); err != nil {
-	// 	return nil, err
-	// }
+	if err := article.Validate(); err != nil {
+		return nil, err
+	}
 
 	if err := s.db.Save(&article).Error; err != nil {
 		logger.LogError("ARTICLE DB:Update", err)
